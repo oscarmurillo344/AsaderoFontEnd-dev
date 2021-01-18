@@ -1,0 +1,23 @@
+{
+  "name": "SistemaVentasApp",
+  "short_name": "SistemaVentasApp",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/imagenes/pollo.webp",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/imagenes/pollos.ico",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
