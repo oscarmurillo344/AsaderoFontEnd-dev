@@ -39,17 +39,16 @@ export class SystemCarComponent implements OnInit,OnDestroy {
     private route:Router,
     private __serviceInven:InventarioService,
     private __Data:DataService) {
-
-      this.local=new LocalStorage();
-      this.lista=new Array();
-      this.verificarCarrito();
-     this.bloqueo=false;
    }
 
   ngOnInit() {
+    this.local=new LocalStorage();
+    this.lista=new Array();
+    this.verificarCarrito();
+   this.bloqueo=false;
     this.__servicioPagar.maximoValor()
     .pipe(takeUntil(this.unsuscribir))
-    .subscribe(data=>{
+    .subscribe((data:number)=>{
       this.numeroFactura=data;
       this.numeroFactura+=1;
      },error=>{
@@ -97,7 +96,7 @@ export class SystemCarComponent implements OnInit,OnDestroy {
             if(index === this.contador){
               this.mensaje.success(this.mms.mensaje,"Exitoso");
               this.local.RemoveStorage('DataCarrito');
-              this.__serviceInven.TablePollo(this.polloMerca).subscribe(data=>{});
+              this.__serviceInven.TablePollo(this.polloMerca).subscribe(data=>null);
               this.local.SetStorage("pollos",this.polloMerca)
               this.__Data.notification.emit(1);
               this.route.navigate(['/inicio']);

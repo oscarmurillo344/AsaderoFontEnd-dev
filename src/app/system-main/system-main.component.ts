@@ -80,8 +80,6 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
     {
       this.navegacion.navigate(['/login',{}]);
       this.local.RemoveAll()
-    }else{
-      this.navegacion.navigate(['/inicio',{}]);
     }
     this.__servicioPro.listarpollo().
     pipe( takeUntil(this.unsuscribir))
@@ -110,9 +108,9 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
     }else{  
     this.__servicioPro.listarInventartio().
     pipe( takeUntil(this.unsuscribir))
-    .subscribe(data => {
+    .subscribe((data:Inventario[]) => {
       this.local.SetStorage("listaProducto",data);
-     this.productLista=this.local.GetStorage("listaProducto");
+     this.productLista=data
      this.llenarTabla(this.productLista);
       this.complete=true;
     },err =>{
@@ -123,7 +121,7 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
     }
   }
 
-  llenarTabla(data:any):void{
+  llenarTabla(data:Inventario[]):void{
     for (let index = 0; index < this.productLista.length ;index++) {
       switch (data[index].productoId.tipo) {
         case 'platos':

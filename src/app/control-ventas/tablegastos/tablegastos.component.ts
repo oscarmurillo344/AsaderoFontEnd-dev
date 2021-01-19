@@ -97,8 +97,8 @@ export class TablegastosComponent implements OnInit,OnDestroy {
       if(this.tipoForm.value.elegir !== 'todo' && this.tipoForm.value.usuario !=='todo'){
         this.__gastos.listarTipoUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe((data:any)=>{
-          this.DataGastos=new MatTableDataSource(data);
+        subscribe((gasto:Gastos[])=>{
+          this.DataGastos=new MatTableDataSource(gasto);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
@@ -114,9 +114,8 @@ export class TablegastosComponent implements OnInit,OnDestroy {
       }else if(this.tipoForm.value.elegir ==='todo' && this.tipoForm.value.usuario !=='todo'){
         this.__gastos.listarUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe(data=>{
-          let datos:any=data;
-          this.DataGastos=new MatTableDataSource(datos);
+        subscribe((gasto:Gastos[])=>{
+          this.DataGastos=new MatTableDataSource(gasto);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
@@ -131,9 +130,8 @@ export class TablegastosComponent implements OnInit,OnDestroy {
       }else if(this.tipoForm.value.elegir==='todo' && this.tipoForm.value.usuario==='todo'){
         this.__gastos.listarFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir))
-        .subscribe(data=>{
-          let datos:any=data;
-          this.DataGastos=new MatTableDataSource(datos);
+        .subscribe((gasto:Gastos[])=>{
+          this.DataGastos=new MatTableDataSource(gasto);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
@@ -148,9 +146,8 @@ export class TablegastosComponent implements OnInit,OnDestroy {
       }else if(this.tipoForm.value.elegir !=='todo' && this.tipoForm.value.usuario==='todo'){
         this.__gastos.ListarTipoFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe(data=>{
-          let datos:any=data;
-          this.DataGastos=new MatTableDataSource(datos);
+        subscribe((gasto:Gastos[])=>{
+          this.DataGastos=new MatTableDataSource(gasto);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
@@ -167,7 +164,6 @@ export class TablegastosComponent implements OnInit,OnDestroy {
   }
   
   Eliminar(i:number):void{
-    try {
       let nuevo:number;
     if(this.DataGastos.paginator.pageIndex !==0){
        nuevo= Math.abs(this.DataGastos.paginator.pageSize+i);
@@ -189,9 +185,5 @@ export class TablegastosComponent implements OnInit,OnDestroy {
         this.toast.error(error.error.mensaje,"Error");
       }
     });
-    } catch (error) {
-      console.log(error)
-    }
-    
   }
 }

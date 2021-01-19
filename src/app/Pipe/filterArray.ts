@@ -10,14 +10,12 @@ export class FilterArray implements PipeTransform{
     transform(value: any):any {
         if(value === '' || value.length < -1)return value;
         let restult='';
-        for(const post of value){
-            if(post.rolNombre ==='ROLE_USER'){
+            if(value.length == 1){
                 restult='User';
               }
-            if(post.rolNombre ==='ROLE_ADMIN'){
+            if(value.length > 1){
                     restult='User,Admin';
             }
-        }
         return restult;
     }
 
