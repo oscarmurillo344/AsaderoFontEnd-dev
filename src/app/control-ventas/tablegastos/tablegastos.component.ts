@@ -97,14 +97,20 @@ export class TablegastosComponent implements OnInit,OnDestroy {
       if(this.tipoForm.value.elegir !== 'todo' && this.tipoForm.value.usuario !=='todo'){
         this.__gastos.listarTipoUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe(data=>{
-          let datos:any=data;
-          this.DataGastos=new MatTableDataSource(datos);
+        subscribe((data:any)=>{
+          this.DataGastos=new MatTableDataSource(data);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined;
-        });
+        },error=>{
+          if(error.error.mensaje===undefined){
+            this.toast.error("Error en la consulta","Error");
+          }else{
+            this.toast.error(error.error.mensaje,"Error");
+          }
+        }
+        );
       }else if(this.tipoForm.value.elegir ==='todo' && this.tipoForm.value.usuario !=='todo'){
         this.__gastos.listarUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
@@ -115,6 +121,12 @@ export class TablegastosComponent implements OnInit,OnDestroy {
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined;
+        },error=>{
+          if(error.error.mensaje===undefined){
+            this.toast.error("Error en la consulta","Error");
+          }else{
+            this.toast.error(error.error.mensaje,"Error");
+          }
         });
       }else if(this.tipoForm.value.elegir==='todo' && this.tipoForm.value.usuario==='todo'){
         this.__gastos.listarFecha(this.gastosx).
@@ -126,6 +138,12 @@ export class TablegastosComponent implements OnInit,OnDestroy {
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined; 
+        },error=>{
+          if(error.error.mensaje===undefined){
+            this.toast.error("Error en la consulta","Error");
+          }else{
+            this.toast.error(error.error.mensaje,"Error");
+          }
         });
       }else if(this.tipoForm.value.elegir !=='todo' && this.tipoForm.value.usuario==='todo'){
         this.__gastos.ListarTipoFecha(this.gastosx).
@@ -137,7 +155,13 @@ export class TablegastosComponent implements OnInit,OnDestroy {
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined;
-        });
+        },error=>{
+      if(error.error.mensaje===undefined){
+        this.toast.error("Error en la consulta","Error");
+      }else{
+        this.toast.error(error.error.mensaje,"Error");
+      }
+    });
       }
      }
   }

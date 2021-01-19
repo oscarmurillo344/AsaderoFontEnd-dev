@@ -37,8 +37,8 @@ export class PagarService {
     return this.http.get<VentasDay>(this.pagarURL+'totalDay/'+usuario);
   }
 
-  public TotalFechasUser(Fecha:EntreFecha):Observable<VentasDay>{
-    return this.http.post<VentasDay>(this.pagarURL+'totalfechaUser',Fecha);
+  public TotalFechasUser(Fecha:EntreFecha):Observable<VentasDay[]>{
+    return this.http.post<VentasDay[]>(this.pagarURL+'totalfechaUser',Fecha);
   }
 
   public TotalFechas(Fecha:EntreFecha):Observable<VentasDay>{

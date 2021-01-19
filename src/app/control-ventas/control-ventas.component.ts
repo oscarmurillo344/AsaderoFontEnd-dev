@@ -138,7 +138,6 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
           );
       
       }else {
-        if(this.UserForm.valid){
           this.fechas=new EntreFecha(this.UserForm.value.usuario,
             this.UserForm.value.start,
             this.UserForm.value.end)
@@ -146,9 +145,8 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
            if(this.UserForm.value.usuario != 'todos'){
             this.__factura.TotalFechasUser(this.fechas).
             pipe( takeUntil(this.unsuscribir)).
-            subscribe(data=>{
-              let d:any=data;
-              this.DataVentas=new MatTableDataSource(d);
+            subscribe((data:VentasDay[])=>{
+              this.DataVentas=new MatTableDataSource(data);
               this.inicializarPaginatorVentas();
               this.toast.success("Consulta Exitosa","Exito");
               this.getTotalCostVentas();
@@ -184,7 +182,6 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
               }
               );
            }
-        }  
       }
       this.ListarGastos();
     }
