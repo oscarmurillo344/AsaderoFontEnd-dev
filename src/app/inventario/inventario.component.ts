@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { LocalStorage } from "../clases/local-storage";
+import { LocalStorage } from "../clases/token/local-storage";
 import {MatDialog} from '@angular/material/dialog';
 import { DialogoYesNoComponent } from '../Dialogo/dialogo-yes-no/dialogo-yes-no.component';
 import { DialogoUpdateComponent } from '../Dialogo/dialogo-update/dialogo-update.component';
@@ -13,7 +13,6 @@ import {  Subject, Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { takeUntil } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-inventario',
   templateUrl: './inventario.component.html',
@@ -21,7 +20,6 @@ import { takeUntil } from 'rxjs/operators';
 })
 
 export class InventarioComponent implements OnInit,OnDestroy {
-
   ProductForm :FormGroup;
   BuscarProductForm: FormGroup;
   ListaInventario:MatTableDataSource<Inventario>;
@@ -57,7 +55,6 @@ export class InventarioComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
-    
   }
   
   aplicarFiltro(event: Event) {
@@ -176,4 +173,5 @@ export class InventarioComponent implements OnInit,OnDestroy {
    });
     
   }
+
 }
