@@ -13,6 +13,7 @@ import { InventarioService } from '../service/inventario.service';
 import { DataService } from '../service/data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-system-car',
@@ -54,6 +55,7 @@ export class SystemCarComponent implements OnInit,OnDestroy {
      },error=>{
        console.log(error)
      });
+     this.diaSemana();
   }
 
   ngOnDestroy(): void {
@@ -76,6 +78,7 @@ export class SystemCarComponent implements OnInit,OnDestroy {
             this.numeroFactura,
             new Date(),
             this.token.getUser(),
+            this.diaSemana(),
             new Producto(this.lista[index].id,this.lista[index].nombre,
               this.lista[index].tipo,
               this.lista[index].precio,this.lista[index].presa),
@@ -158,5 +161,12 @@ export class SystemCarComponent implements OnInit,OnDestroy {
 
     wentLastControl(){
       this.route.navigate(["/lastsold"]);
+    }
+
+    public diaSemana():string{
+    let fecha=new Date();
+     let dia=new DatePipe("es");
+     let f=dia.transform(fecha,"EEEE");
+      return f;
     }
 }
