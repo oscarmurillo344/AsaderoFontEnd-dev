@@ -19,7 +19,7 @@
             </mat-select>
           </mat-form-field>
   
-          <mat-form-field style="width: 47%; margin-left: 2%;" appearance="fill">
+          <mat-form-field style="width: 47%;margin-left: 2%;" appearance="fill">
             <mat-label>Seleccione usuario: </mat-label>
             <mat-select formControlName="usuario" >
               <mat-option value="todo">todos</mat-option>
@@ -30,7 +30,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-form-field appearance="fill" style="width: 90%;">
             <mat-label>Ingrese rango de fechas: </mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate formControlName="start" placeholder="Start date">
@@ -39,10 +39,7 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
-          <mat-form-field  style="width: 100%;" >
-            <mat-label>filtro por descripci&oacute;n</mat-label>
-            <input matInput (keyup)="applyFilter($event)" #input>
-          </mat-form-field>    
+
           <button mat-raised-button style="width: 100%;" (click)="ListarGastos2()"
           [disabled]="!tipoForm.valid">
             Listar
@@ -50,6 +47,11 @@
 
         </form>
       </mat-expansion-panel>
+
+      <mat-form-field  style="width: 95%; margin-left: 2%; padding-top: 3%;" >
+        <mat-label>filtro por descripci&oacute;n</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
 
 <table *ngIf="complete; else progress" mat-table [dataSource]="DataGastos">
 

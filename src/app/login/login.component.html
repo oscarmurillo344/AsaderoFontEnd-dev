@@ -10,7 +10,7 @@
           </mat-form-field>
             <mat-form-field appearance="fill" style="width: 100%; margin-top: 15px;">
               <mat-label>password</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasena">
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasena" (keyup.enter)="LogIn()">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
@@ -19,7 +19,7 @@
             contrase&ntilde;a o usuario incorrecto
           </mat-error>
         </form>
-    <mat-card-actions>
+    <mat-card-actions >
         <button (click)="LogIn()" [disabled]="!UserForm.valid" mat-raised-button color="warn" style="width: 100%; text-align: center; margin: 0% 0% 3% 0;" >
           <mat-icon>login</mat-icon>
           Login</button>

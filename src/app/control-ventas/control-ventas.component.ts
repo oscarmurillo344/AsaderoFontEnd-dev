@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { PagarService } from '../service/pagar.service';
@@ -39,7 +39,8 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
   gastosX:GastosX;
   valorGasto:number=0;
   private unsuscribir = new Subject<void>();
-
+  semana:string[];
+  diaSelect:string[]=[];
   constructor(
     private usuario:AuthService,
     private __factura:PagarService,
@@ -72,15 +73,24 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
   }
   ngOnInit() {
     this.UserForm=this.crearFormMain();
-    this.usuario.ListarUsuario().pipe(
-      takeUntil(this.unsuscribir)
-    ).subscribe((data:NuevoUsuario[])=>{
-      this.user=data;
+    this.user=new Array();
+    this.usuario.ListarUsuario().subscribe(data=>{
+      let lista:any=data
+      this.user=lista;
     });
+    this.semana=['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
   }
   ngOnDestroy(): void {
     this.unsuscribir.next();
     this.unsuscribir.complete();
+  }
+
+  public diaSeleccion(event,i:number):void{
+    if(event.checked){
+      this.diaSelect.push(event.source.value)
+    }else{
+      this.diaSelect.forEach((data:string,i:number)=> data==event.source.value ? this.diaSelect.splice(i,1) : null)
+    }
   }
     inicializarPaginatorVentas():void{
       setTimeout(()=>this.DataVentas.paginator=this.paginatorVentas);
@@ -95,7 +105,9 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
     ExportarExcel():void{
       if(this.DataVentas!==undefined){
         let array:any[]=this.DataVentas.data;
-        array.forEach(element=> element.precio=element.cantidad*element.precio);
+        array.forEach(element=>{
+          element.precio=element.cantidad*element.precio;
+        });
         let respuesta=this.dialogo.open(ExportarComponent,{data:array});
         respuesta.afterClosed().
         pipe( takeUntil(this.unsuscribir)).
@@ -116,8 +128,9 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
       if (this.UserForm.value.Seleccion === 'dia' && this.UserForm.value.usuario != 'todos') {
           this.__factura.TotalDay(this.UserForm.value.usuario).
           pipe( takeUntil(this.unsuscribir)).
-          subscribe((data:VentasDay[])=>{
-            this.DataVentas=new MatTableDataSource(data);
+          subscribe(data=>{
+            let d:any=data;
+            this.DataVentas=new MatTableDataSource(d);
             this.inicializarPaginatorVentas();
             this.toast.success("Consulta Exitosa","Exito");
             this.getTotalCostVentas();
@@ -136,18 +149,19 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
       }else {
           this.fechas=new EntreFecha(this.UserForm.value.usuario,
             this.UserForm.value.start,
-            this.UserForm.value.end)
+            this.UserForm.value.end,this.diaSelect.toString())
 
            if(this.UserForm.value.usuario != 'todos'){
-            this.__factura.TotalFechasUser(this.fechas).
-            pipe( takeUntil(this.unsuscribir)).
-            subscribe((data:VentasDay[])=>{
-              this.DataVentas=new MatTableDataSource(data);
-              this.inicializarPaginatorVentas();
-              this.toast.success("Consulta Exitosa","Exito");
-              this.getTotalCostVentas();
-              this.cerrado=undefined;
-              this.complete=true;
+             if(this.diaSelect.length){
+              this.__factura.TotalUserFechaDia(this.fechas).pipe(
+                takeUntil(this.unsuscribir)
+              ).subscribe((data:VentasDay[])=>{
+                this.DataVentas=new MatTableDataSource(data);
+                this.inicializarPaginatorVentas();
+                this.toast.success("Consulta Exitosa","Exito");
+                this.getTotalCostVentas();
+                this.cerrado=undefined;
+                this.complete=true;
               },error=>{
                 if(error.error.mensaje != undefined){
                   this.toast.error("Error "+error.error.mensaje,"Error")
@@ -155,18 +169,38 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
                   this.toast.error("Error en la conulta","Error")
                 }
                 this.complete=true;
-              }
-              );
+              })
+             }else{
+              this.__factura.TotalFechasUser(this.fechas).
+              pipe( takeUntil(this.unsuscribir)).
+              subscribe((data:VentasDay[])=>{
+                this.DataVentas=new MatTableDataSource(data);
+                this.inicializarPaginatorVentas();
+                this.toast.success("Consulta Exitosa","Exito");
+                this.getTotalCostVentas();
+                this.cerrado=undefined;
+                this.complete=true;
+                },error=>{
+                  if(error.error.mensaje != undefined){
+                    this.toast.error("Error "+error.error.mensaje,"Error")
+                  }else{
+                    this.toast.error("Error en la conulta","Error")
+                  }
+                  this.complete=true;
+                }
+                )
+             }
            }else{
-            this.__factura.TotalFechas(this.fechas).
-            pipe( takeUntil(this.unsuscribir))
-            .subscribe((data:VentasDay[])=>{
-              this.DataVentas=new MatTableDataSource(data);
-              this.inicializarPaginatorVentas();
-              this.toast.success("Consulta Exitosa","Exito");
-              this.getTotalCostVentas();
-              this.cerrado=undefined;
-              this.complete=true;
+            if(this.diaSelect){
+              this.__factura.TotalFechaDia(this.fechas).pipe(
+                takeUntil(this.unsuscribir)
+              ).subscribe((data:VentasDay[])=>{
+                this.DataVentas=new MatTableDataSource(data);
+                this.inicializarPaginatorVentas();
+                this.toast.success("Consulta Exitosa","Exito");
+                this.getTotalCostVentas();
+                this.cerrado=undefined;
+                this.complete=true;
               },error=>{
                 if(error.error.mensaje != undefined){
                   this.toast.error("Error "+error.error.mensaje,"Error")
@@ -174,8 +208,28 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
                   this.toast.error("Error en la conulta","Error")
                 }
                 this.complete=true;
-              }
-              );
+              })
+            }else{
+              this.__factura.TotalFechas(this.fechas).
+              pipe( takeUntil(this.unsuscribir))
+              .subscribe(data=>{
+                let d:any=data;
+                this.DataVentas=new MatTableDataSource(d);
+                this.inicializarPaginatorVentas();
+                this.toast.success("Consulta Exitosa","Exito");
+                this.getTotalCostVentas();
+                this.cerrado=undefined;
+                this.complete=true;
+                },error=>{
+                  if(error.error.mensaje != undefined){
+                    this.toast.error("Error "+error.error.mensaje,"Error")
+                  }else{
+                    this.toast.error("Error en la conulta","Error")
+                  }
+                  this.complete=true;
+                }
+                );
+            }
            }
       }
       this.ListarGastos();
@@ -186,46 +240,37 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
   ListarGastos():void{
     this.gastosX=new GastosX(
       this.UserForm.value.usuario,
-      'todo',
+      '',
       this.UserForm.value.start,
       this.UserForm.value.end
     );
     if(this.UserForm.value.usuario === 'todos'){
       this.__gastos.listarFecha(this.gastosX).
       pipe( takeUntil(this.unsuscribir)).
-      subscribe((gasto:Gastos[])=>{
+      subscribe((gasto:any)=>{
       this.gastoData= new MatTableDataSource(gasto);
-      this.CountArray(gasto)
+      this.getTotalGastos(gasto);
       this.__gastos.filter("accion");
       },error=>{
-        if(error.error.mensaje===undefined){
-          this.toast.error("Error en la consulta","Error");
-        }else{
-          this.toast.error(error.error.mensaje,"Error");
-        }
+        console.log(error)
       });
     }else if(this.UserForm.value.usuario !== 'todos'){
       this.__gastos.listarUserFecha(this.gastosX).
       pipe( takeUntil(this.unsuscribir)).
-      subscribe((gasto:Gastos[])=>{
+      subscribe((gasto:any)=>{
         this.gastoData= new MatTableDataSource(gasto);
-        this.CountArray(gasto)
+        this.getTotalGastos(gasto);
         this.__gastos.filter("accion");
       },error=>{
-        if(error.error.mensaje===undefined){
-          this.toast.error("Error en la consulta","Error");
-        }else{
-          this.toast.error(error.error.mensaje,"Error");
-        }
+        console.log(error)
       });
     }
     
   }  
-  public CountArray(Array:any[]):void{
-    this.valorGasto=0
-    Array.forEach(data=>{
-      this.valorGasto+=data.valor
+  getTotalGastos(Dato:Array<any>):void{
+    this.valorGasto=0;
+      Dato.forEach(ele => {
+      this.valorGasto=this.valorGasto+ele.valor;
     });
   }
-
   }

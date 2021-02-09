@@ -97,73 +97,53 @@ export class TablegastosComponent implements OnInit,OnDestroy {
       if(this.tipoForm.value.elegir !== 'todo' && this.tipoForm.value.usuario !=='todo'){
         this.__gastos.listarTipoUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe((gasto:Gastos[])=>{
-          this.DataGastos=new MatTableDataSource(gasto);
+        subscribe(data=>{
+          let datos:any=data;
+          this.DataGastos=new MatTableDataSource(datos);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined;
-        },error=>{
-          if(error.error.mensaje===undefined){
-            this.toast.error("Error en la consulta","Error");
-          }else{
-            this.toast.error(error.error.mensaje,"Error");
-          }
-        }
-        );
+        });
       }else if(this.tipoForm.value.elegir ==='todo' && this.tipoForm.value.usuario !=='todo'){
         this.__gastos.listarUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe((gasto:Gastos[])=>{
-          this.DataGastos=new MatTableDataSource(gasto);
+        subscribe(data=>{
+          let datos:any=data;
+          this.DataGastos=new MatTableDataSource(datos);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined;
-        },error=>{
-          if(error.error.mensaje===undefined){
-            this.toast.error("Error en la consulta","Error");
-          }else{
-            this.toast.error(error.error.mensaje,"Error");
-          }
         });
       }else if(this.tipoForm.value.elegir==='todo' && this.tipoForm.value.usuario==='todo'){
         this.__gastos.listarFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir))
-        .subscribe((gasto:Gastos[])=>{
-          this.DataGastos=new MatTableDataSource(gasto);
+        .subscribe(data=>{
+          let datos:any=data;
+          this.DataGastos=new MatTableDataSource(datos);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined; 
-        },error=>{
-          if(error.error.mensaje===undefined){
-            this.toast.error("Error en la consulta","Error");
-          }else{
-            this.toast.error(error.error.mensaje,"Error");
-          }
         });
       }else if(this.tipoForm.value.elegir !=='todo' && this.tipoForm.value.usuario==='todo'){
         this.__gastos.ListarTipoFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
-        subscribe((gasto:Gastos[])=>{
-          this.DataGastos=new MatTableDataSource(gasto);
+        subscribe(data=>{
+          let datos:any=data;
+          this.DataGastos=new MatTableDataSource(datos);
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;
           this.cerrado=undefined;
-        },error=>{
-      if(error.error.mensaje===undefined){
-        this.toast.error("Error en la consulta","Error");
-      }else{
-        this.toast.error(error.error.mensaje,"Error");
-      }
-    });
+        });
       }
      }
   }
   
   Eliminar(i:number):void{
+    try {
       let nuevo:number;
     if(this.DataGastos.paginator.pageIndex !==0){
        nuevo= Math.abs(this.DataGastos.paginator.pageSize+i);
@@ -185,5 +165,9 @@ export class TablegastosComponent implements OnInit,OnDestroy {
         this.toast.error(error.error.mensaje,"Error");
       }
     });
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 }
