@@ -152,7 +152,7 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
             this.UserForm.value.end,this.diaSelect.toString())
 
            if(this.UserForm.value.usuario != 'todos'){
-             if(this.diaSelect.length){
+             if(this.diaSelect.length>0){
               this.__factura.TotalUserFechaDia(this.fechas).pipe(
                 takeUntil(this.unsuscribir)
               ).subscribe((data:VentasDay[])=>{
@@ -191,7 +191,7 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
                 )
              }
            }else{
-            if(this.diaSelect){
+            if(this.diaSelect.length>0){
               this.__factura.TotalFechaDia(this.fechas).pipe(
                 takeUntil(this.unsuscribir)
               ).subscribe((data:VentasDay[])=>{
