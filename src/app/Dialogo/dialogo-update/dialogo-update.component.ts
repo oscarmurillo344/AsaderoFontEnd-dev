@@ -49,11 +49,11 @@ export class DialogoUpdateComponent implements OnInit,OnDestroy {
   }
 
   crearForm(data){
-    if(data.extras!==null){
+    if(data.extras!==null && data.extras != ""){
       let ex:string=data.extras;
       this.lista=ex.split(",")
     }else{
-      this.lista=[];
+      this.lista=[]
     }
 
     return new FormGroup({
@@ -95,27 +95,25 @@ export class DialogoUpdateComponent implements OnInit,OnDestroy {
   }
   ValorCambio($event):void{
     if($event.checked)
-    this.lista.push(""+$event.source.value);
+    this.lista.push(""+$event.source.value)
     else if($event.checked===false)
     this.lista.forEach((data:string,i:number)=> data==$event.source.value ?  this.lista.splice(i,1) : null) 
   }
   CargarCombo():void{
     this.CombInventario=this.local.GetStorage("listaProducto");
-    this.CombInventario.forEach((data,index)=>{
-      if(data.productoId.tipo=='combos'){
-        this.CombInventario.splice(index,1);
-      }
-     this.estadoProducto(this.lista,data)
-    });
+    this.CombInventario.forEach((data,index)=> data.productoId.tipo=='combos'? this.CombInventario.splice(index,1): undefined)
+    this.estadoProducto(this.lista,this.CombInventario)
     AppComponent.OrdenarData(this.CombInventario);
 }
-  estadoProducto(ver:string[],data:any):void{
-    ver.find((filtro:any)=>{
-      if(data.id == filtro){
-        return data.estado=true
-      }else{
-        return data.estado=false
-      }
+  estadoProducto(ver:string[],data:Inventario[]):void{
+    data.forEach(da=>{
+      ver.find((filtro:any)=>{
+        if(da.id == filtro){
+          return da.estado=true
+        }else{
+          return da.estado=false
+        }
+      })
     })
   }
 }

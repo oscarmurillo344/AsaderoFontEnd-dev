@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit,OnDestroy {
     if(this.token.getToken()){
       this.roles=this.token.getAuth();
     }
-    
   }
 
   LogIn(){
