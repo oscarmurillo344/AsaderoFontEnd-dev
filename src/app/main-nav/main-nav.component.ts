@@ -14,7 +14,7 @@ import { DataService } from '../service/data.service';
 })
 export class MainNavComponent implements OnInit  {
 
-          valor :any[];
+          valor :any;
           open :boolean;
           local :LocalStorage;
           notificacion:number;
@@ -36,10 +36,10 @@ export class MainNavComponent implements OnInit  {
 
      ngOnInit(){
      if(this.local.GetStorage("AuthToken")){
-      this.valor=this.local.GetStorage("AuthToken");
+      this.valor=false;
       this.router.navigate(["/inicio"]);
     }else{
-       this.valor=this.local.GetStorage("AuthToken");
+       this.valor=true;
        
      }
     this.__Data.notification.subscribe(numero=>{this.verificar();});
@@ -57,6 +57,8 @@ export class MainNavComponent implements OnInit  {
     logOut(){
       this.local.RemoveAll();
       this.router.navigate(['/login']);
+      document.getElementById('boton').style.display='none';
+      document.getElementById('botonCarro').style.display='none';
     }
     
 

@@ -67,12 +67,12 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-         *ngIf="valor!=null">
+         [ngClass]=" {mostar: valor} " id="boton">
         <mat-icon >menu</mat-icon>
       </button>
       <span class="centar"><a class="diseno" [routerLink]="['/inicio']" > Sistema de Ventas</a></span>
 
-        <span id="botonCarro" *ngIf="valor!=null" [matBadge]="notificacion" matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
+        <span id="botonCarro"  [ngClass]=" {mostar: valor} " id="botonCarro" [matBadge]="notificacion" matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
           <a id="botonCarro" [routerLink]="['/carrito']" style="color:white ;"> 
           <mat-icon>
             shopping_cart
