@@ -62,7 +62,7 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
       });
     }
 
-  ngOnInit() {
+  ngOnInit() { console.log(new Date())
     this.platos=new Array();
     this.bebidas=new Array();
     this.combos=new Array();

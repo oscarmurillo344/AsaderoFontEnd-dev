@@ -60,11 +60,9 @@ export class LoginComponent implements OnInit,OnDestroy {
         this.token.setUser(data.nombreUsuario);
         this.token.setAuth(data.authorities);
         this.roles=data.authorities;
-        document.getElementById('boton').style.display='block';
-        document.getElementById('botonCarro').style.display='block';
         this.mensaje.success("sesión iniciada","información");
         this.completar=true;
-        this.route.navigate(["/inicio",{}])
+        this.route.navigate(["/inicio"])
     },
     err =>{
       this.Validar=true;

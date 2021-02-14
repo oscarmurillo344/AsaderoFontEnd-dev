@@ -10,7 +10,7 @@
       Pollos Andy's
       </h1>      
        
-    <mat-nav-list >
+    <mat-nav-list>
           <mat-expansion-panel mat-list-item routerLinkActive="active" hideToggle>
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -67,13 +67,12 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-         [ngClass]=" {'mostrar': valor} ">
+         *ngIf="valor!=null">
         <mat-icon >menu</mat-icon>
       </button>
-      <span class="centar"><a (click)="refresh()"> Sistema de Ventas</a></span>
+      <span class="centar"><a class="diseno" [routerLink]="['/inicio']" > Sistema de Ventas</a></span>
 
-  
-        <span id="botonCarro" [ngClass]=" {'mostrar': valor} " [matBadge]="notificacion" matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
+        <span id="botonCarro" *ngIf="valor!=null" [matBadge]="notificacion" matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
           <a id="botonCarro" [routerLink]="['/carrito']" style="color:white ;"> 
           <mat-icon>
             shopping_cart

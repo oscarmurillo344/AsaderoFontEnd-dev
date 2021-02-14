@@ -23,7 +23,9 @@
   margin-left: auto;
   margin-right: auto;
 }
-
+.diseno{
+  text-decoration: none; color: white;
+}
 .imagen{
   margin-top: 5%;
   margin-left: 5%;
@@ -49,8 +51,5 @@
     bottom: 0;
     left: 0;
     right: 0;
-  }
-  .mostrar{
-    display: none ;
   }
 
