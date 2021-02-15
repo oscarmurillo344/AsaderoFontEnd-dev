@@ -35,7 +35,7 @@ import { ExcelExportService } from './service/excel-export.service';
 import { ExportarComponent } from './Dialogo/exportar/exportar.componentes';
 import { TablegastosComponent } from './control-ventas/tablegastos/tablegastos.component';
 
-import localeEs from '@angular/common/locales/es';
+import localeEs from '@angular/common/locales/es-EC';
 import {registerLocaleData  } from "@angular/common";
 
 registerLocaleData(localeEs,"es")
