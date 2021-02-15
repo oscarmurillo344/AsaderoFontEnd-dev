@@ -38,7 +38,7 @@ import { TablegastosComponent } from './control-ventas/tablegastos/tablegastos.c
 import localeEs from '@angular/common/locales/es-EC';
 import {registerLocaleData  } from "@angular/common";
 
-registerLocaleData(localeEs,"es")
+registerLocaleData(localeEs,"es-EC")
 
 @NgModule({
   declarations: [
@@ -78,7 +78,7 @@ registerLocaleData(localeEs,"es")
   ], 
 providers: [
             {
-              provide: LOCALE_ID, useValue: 'es'
+              provide: LOCALE_ID, useValue: 'es-EC'
              },
             {
              provide: HTTP_INTERCEPTORS,

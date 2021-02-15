@@ -165,7 +165,7 @@ export class SystemCarComponent implements OnInit,OnDestroy {
 
     public diaSemana():string{
     let fecha=new Date();
-     let dia=new DatePipe("es");
+     let dia=new DatePipe("es-EC");
      let f=dia.transform(fecha,"EEEE");
       return f;
     }
