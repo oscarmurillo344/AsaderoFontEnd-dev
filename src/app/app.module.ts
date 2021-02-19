@@ -78,7 +78,8 @@ registerLocaleData(localeEs,"es-EC")
   ], 
 providers: [
             {
-              provide: LOCALE_ID, useValue: 'es-EC'
+              provide: LOCALE_ID,
+               useValue: 'es-EC'
              },
             {
              provide: HTTP_INTERCEPTORS,

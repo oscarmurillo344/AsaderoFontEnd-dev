@@ -30,7 +30,8 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
   DataVentas: MatTableDataSource<VentasDay>;
   valor:number=0;
   selected:number=0;
-  vista:boolean;
+  vista_dia:boolean=false
+  vista_fecha:boolean=false
   user:Array<NuevoUsuario>;
   fechas:EntreFecha;
   UserForm:FormGroup;
@@ -64,10 +65,18 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
   } 
 
   select(event){
-    if(event=='semanas'){
-      this.vista=true;
-    }else{
-      this.vista=false;
+    switch (event) {
+      case 'semanas':
+        this.vista_fecha=true
+        this.vista_dia=false
+        break;
+      case 'semanas-dia':
+        this.vista_dia=true
+        break;
+      default:
+        this.vista_fecha=false
+        this.vista_dia=false
+        break;
     }
 
   }
@@ -78,14 +87,14 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
       let lista:any=data
       this.user=lista;
     });
-    this.semana=['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+    this.semana=['lunes','martes','miercoles','jueves','viernes','sábado','domingo'];
   }
   ngOnDestroy(): void {
     this.unsuscribir.next();
     this.unsuscribir.complete();
   }
 
-  public diaSeleccion(event,i:number):void{
+  public diaSeleccion(event):void{
     if(event.checked){
       this.diaSelect.push(event.source.value)
     }else{
@@ -108,7 +117,12 @@ export class ControlVentasComponent implements OnInit,OnDestroy  {
         array.forEach(element=>{
           element.precio=element.cantidad*element.precio;
         });
-        let respuesta=this.dialogo.open(ExportarComponent,{data:array});
+        let respuesta=this.dialogo.open(ExportarComponent,
+          {data:{
+            datos:array,
+            fechaInicio: this.UserForm.value.start,
+            fechaFinal:this.UserForm.value.end
+          }})
         respuesta.afterClosed().
         pipe( takeUntil(this.unsuscribir)).
         subscribe(data=>{
