@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { updatePollo } from '../clases/productos/updatePollo';
 import { InventarioService } from '../service/inventario.service';
 import { DataService } from '../service/data.service';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
@@ -48,7 +47,6 @@ export class SystemCarComponent implements OnInit,OnDestroy {
     this.verificarCarrito();
    this.bloqueo=false;
     this.__servicioPagar.maximoValor()
-    .pipe(takeUntil(this.unsuscribir))
     .subscribe((data:number)=>{
       this.numeroFactura=data;
       this.numeroFactura+=1;
@@ -69,9 +67,8 @@ export class SystemCarComponent implements OnInit,OnDestroy {
     {
       this.contador=this.lista.length-1;
       this.polloMerca=this.local.GetStorage("pollos");
-      let count=0;
-      if( this.polloMerca.pollo > 0){
         this.bloqueo=true;
+        if(this.ValidarPollo()){
         for (let index = 0; index < this.lista.length; index++)
          {
           this.factura=new Factura(
@@ -79,28 +76,16 @@ export class SystemCarComponent implements OnInit,OnDestroy {
             new Date(),
             this.token.getUser(),
             this.diaSemana(),
-            new Producto(this.lista[index].id,this.lista[index].nombre,
-              this.lista[index].tipo,
-              this.lista[index].precio,this.lista[index].presa),
+           this.lista[index] as Producto,
             this.lista[index].cantidad,
             this.lista[index].extra);
           this.__servicioPagar.pagar(this.factura)
-          .pipe(takeUntil(this.unsuscribir))
           .subscribe(data=>{
             this.mms=data;
-            //validacion de pollos y presas con la vista
-            count=this.lista[index].presa*this.lista[index].cantidad;
-            while (this.polloMerca.presa <= count) {
-              this.polloMerca.pollo--;
-              this.polloMerca.presa+=8;
-            }
-              this.polloMerca.presa-=count;
-              //fin
             if(index === this.contador){
               this.mensaje.success(this.mms.mensaje,"Exitoso");
               this.local.RemoveStorage('DataCarrito');
               this.__serviceInven.TablePollo(this.polloMerca).subscribe(data=>null);
-              this.local.SetStorage("pollos",this.polloMerca)
               this.__Data.notification.emit(1);
               this.route.navigate(['/inicio']);
               this.bloqueo=false;
@@ -114,9 +99,9 @@ export class SystemCarComponent implements OnInit,OnDestroy {
             }
             this.bloqueo=false;
           });
-         }
+      }
       }else{
-        this.mensaje.error("No existen pollos","Error");
+        this.mensaje.error("No existen pollos","Error");this.bloqueo=false
       }
     }else{
       this.mensaje.error("No existe productos en el carrito","Error");
@@ -124,7 +109,7 @@ export class SystemCarComponent implements OnInit,OnDestroy {
   }
     verificarCarrito()
     {
-    if(this.local.GetStorage('DataCarrito') != null)
+    if(this.local.GetStorage('DataCarrito'))
     {
       this.lista=this.local.GetStorage('DataCarrito');
       this.total=0;this.valor=0;
@@ -169,4 +154,21 @@ export class SystemCarComponent implements OnInit,OnDestroy {
      let f=dia.transform(fecha,"EEEE");
       return f;
     }
+
+  ValidarPollo():boolean{
+     let count:number=0,estado:boolean
+     this.lista.forEach(data=>{
+     count=data.presa*data.cantidad;
+     while (this.polloMerca.presa <= count && this.polloMerca.pollo > 0) {
+       this.polloMerca.pollo--
+       this.polloMerca.presa+=8
+     }
+     if(this.polloMerca.presa >= count && this.polloMerca.pollo > 0 ){
+       this.polloMerca.presa-=count
+        estado=true
+     }
+     else estado=false
+    })
+    return  estado
+  }
 }

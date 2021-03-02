@@ -84,9 +84,8 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
     }else{
       this.navegacion.navigate(['/inicio',{}]);
     }
-    this.__servicioPro.listarpollo().
-    pipe( takeUntil(this.unsuscribir))
-    .subscribe(data=>{
+    this.__servicioPro.listarpollo()
+        .subscribe(data=>{
       if(data.pollo!==undefined){
        this.__data.pollo=data.pollo;
        this.__data.presa=data.presa;
@@ -109,8 +108,7 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
       this.llenarTabla(this.productLista);
       this.complete=true;
     }else{  
-    this.__servicioPro.listarInventartio().
-    pipe( takeUntil(this.unsuscribir))
+    this.__servicioPro.listarInventartio()
     .subscribe(data => {
       this.local.SetStorage("listaProducto",data);
      this.productLista=this.local.GetStorage("listaProducto");
@@ -131,7 +129,6 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
           this.platos.push(new ListaProducto(data[index].productoId.id,
             data[index].productoId.nombre,
             data[index].productoId.tipo,
-            1,
             data[index].cantidadExist,
             data[index].productoId.precio,
             data[index].productoId.presa,
@@ -144,7 +141,6 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
           this.bebidas.push(new ListaProducto(data[index].productoId.id,
             data[index].productoId.nombre,
             data[index].productoId.tipo,
-            1,
             data[index].cantidadExist,
             data[index].productoId.precio,
             data[index].productoId.presa,
@@ -157,7 +153,6 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
           this.combos.push(new ListaProducto(data[index].productoId.id,
             data[index].productoId.nombre,
             data[index].productoId.tipo,
-            1,
             data[index].cantidadExist,
             data[index].productoId.precio,
             data[index].productoId.presa,
@@ -171,7 +166,6 @@ export class SystemMainComponent implements OnInit, AfterViewInit,OnDestroy  {
           this.porciones.push(new ListaProducto(data[index].productoId.id,
             data[index].productoId.nombre,
             data[index].productoId.tipo,
-            1,
             data[index].cantidadExist,
             data[index].productoId.precio,
             data[index].productoId.presa,
