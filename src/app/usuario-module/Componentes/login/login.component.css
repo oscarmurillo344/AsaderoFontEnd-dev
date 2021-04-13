@@ -1,0 +1,20 @@
+.centar{
+    margin-top: 100px;  
+  }
+  .spinner{
+    margin: auto; margin-top: 160px;
+  }
+  .imgspiner{
+  height: auto; display: block; margin: auto; margin-top: 5%;
+  }
+  .botonLogin{
+      width: 100%;
+  }
+    @media only screen and (min-width: 500px) {
+      .centar{
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top: 100px;
+  
+      }
+      }

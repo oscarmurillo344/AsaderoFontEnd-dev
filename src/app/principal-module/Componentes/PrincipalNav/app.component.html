@@ -1,0 +1,86 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="open">
+  
+        <img src="../../assets/imagenes/pollo.webp" class="imagen" alt="Logotipo Da&ntilde;ado" width="150">
+  
+        <h1 class="tituloMenu">
+        Pollos Andy's
+        </h1>      
+         
+      <mat-nav-list >
+            <mat-expansion-panel mat-list-item routerLinkActive="active" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon>
+                    person
+                  </mat-icon>  
+                  <span> {{__Data.nombreUsuario}} </span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+                <span style="margin-top: 5%;">Pollo: {{__Data.pollo}} </span>
+                <span style="margin-left: 5%;">Presa: {{__Data.presa}} </span>
+                  <button [routerLink]="['/updatep']" mat-button color="warn" (click)="drawer.toggle()" style="width: 100%;">Next</button>
+            </mat-expansion-panel>
+        <mat-divider></mat-divider>
+        <a mat-list-item [routerLink]="['ventas/inicio']" (click)="drawer.toggle()" routerLinkActive="active">
+          <mat-icon>
+            home
+          </mat-icon> 
+          Inicio
+        </a>
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['/inventario']" (click)="drawer.toggle()">
+          <mat-icon>
+            list_alt
+          </mat-icon>
+          Inventario
+        </a>
+        <a mat-list-item routerLinkActive="active" [routerLink]="['/gastos']" (click)="drawer.toggle()">
+          <mat-icon>
+            pending_actions
+          </mat-icon>
+          Gastos
+        </a>
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['/ControlSold']" (click)="drawer.toggle()">
+          <mat-icon>
+            fact_check
+          </mat-icon>
+          Control de Ventas y Gastos</a>
+          <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['auth/usuarios']" (click)="drawer.toggle()">
+            <mat-icon>
+              person_add
+            </mat-icon>
+            Usuarios</a>
+        <a mat-list-item routerLinkActive="active" (click)="logOut()"(click)="drawer.toggle()">
+          <mat-icon>
+            exit_to_app
+          </mat-icon>
+          Log Out</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="contenedor">
+      <mat-toolbar class="header Fixed" >
+        <button id="boton"
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+           [ngClass]=" {'mostrar': __Data.ObtenerBoton()} ">
+          <mat-icon >menu</mat-icon>
+        </button>
+        <span class="centar"> Sistema de Ventas</span>
+          <span id="botonCarro" [ngClass]=" {'mostrar': __Data.ObtenerBoton()} " [matBadge]="notificacion" matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
+            <a id="botonCarro" [routerLink]="['ventas/carrito']" style="color:white ;"> 
+            <mat-icon>
+              shopping_cart
+            </mat-icon>
+          </a>
+        </span>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
