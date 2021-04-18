@@ -8,10 +8,10 @@ import { LocalstorageService } from 'src/app/principal-module/Services/localstor
 import { TokenServiceService } from 'src/app/usuario-module/Services/token-service.service';
 import { Factura } from '../../Entidades/factura/factura';
 import { ListaProducto } from '../../Entidades/productos/lista-producto';
-import { Producto } from '../../Entidades/productos/producto';
 import { updatePollo } from '../../Entidades/productos/updatePollo';
-import { InventarioService } from '../../Services/inventario.service';
+import { InventarioService } from '../../../inventarios-module/Servicios/inventario.service';
 import { PagarService } from '../../Services/pagar.service';
+import { Producto } from 'src/app/inventarios-module/Entidades/producto';
 
 @Component({
   selector: 'app-facturar-ventas',

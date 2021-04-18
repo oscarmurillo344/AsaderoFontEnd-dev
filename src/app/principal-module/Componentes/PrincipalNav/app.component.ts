@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   Lista:any[]=[];
   vista:boolean=true;
   
-isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 800px)')
 .pipe(
 map(result => result.matches),
 shareReplay()
@@ -39,6 +39,7 @@ constructor(private breakpointObserver: BreakpointObserver,
       this.router.navigate(["ventas/inicio"]);
       }
       this.__Data.notification.subscribe((numero:any)=>this.verificarNotificacion())
+      this.isHandset$.subscribe(data=>this.open=data);
     }
 
   verificarNotificacion(){

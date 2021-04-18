@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
      });
    }
   ngOnInit() {
+    if(this.token.getToken())this.route.navigate(["ventas/inicio"])
   }
 
   LogIn(){

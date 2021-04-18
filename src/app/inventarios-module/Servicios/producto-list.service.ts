@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mensaje } from '../../principal-module/Entidades/mensaje';
-import { Producto } from '../Entidades/productos/producto';
 import { environment } from 'src/environments/environment.prod';
+import { Producto } from '../Entidades/producto';
 
 
 @Injectable({

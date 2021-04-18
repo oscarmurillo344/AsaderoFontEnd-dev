@@ -4,10 +4,10 @@ import { AppComponent } from 'src/app/principal-module/Componentes/PrincipalNav/
 import { DataService } from 'src/app/principal-module/Services/data.service';
 import { LocalstorageService } from 'src/app/principal-module/Services/localstorage.service';
 import { TokenServiceService } from 'src/app/usuario-module/Services/token-service.service';
-import { Inventario } from '../../Entidades/productos/inventario';
+import { Inventario } from '../../../inventarios-module/Entidades/inventario';
 import { ListaProducto } from '../../Entidades/productos/lista-producto';
 import { updatePollo } from '../../Entidades/productos/updatePollo';
-import { InventarioService } from '../../Services/inventario.service';
+import { InventarioService } from '../../../inventarios-module/Servicios/inventario.service';
 
 @Component({
   selector: 'app-principal-ventas',

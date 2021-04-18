@@ -5,29 +5,30 @@ import { VentasRoutingModule } from './ventas-routing.module';
 import { MaterialModuleModule } from '../material-module/material-module.module';
 
 
-import { InventarioService } from './Services/inventario.service';
+import { InventarioService } from '../inventarios-module/Servicios/inventario.service';
 import { PagarService } from './Services/pagar.service';
-import { ProductoListService } from './Services/producto-list.service';
+import { ProductoListService } from '../inventarios-module/Servicios/producto-list.service';
 
 import { PrincipalVentasComponent } from './Componentes/principal-ventas/principal-ventas.component';
 import { FacturarVentasComponent } from './Componentes/facturar-ventas/facturar-ventas.component';
+import { EliminarVentasComponent } from './Componentes/eliminar-ventas/eliminar-ventas.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [PrincipalVentasComponent, FacturarVentasComponent],
+  declarations: [PrincipalVentasComponent, FacturarVentasComponent, EliminarVentasComponent],
   imports: [
     CommonModule,
     MaterialModuleModule,
-    VentasRoutingModule
-  ],
+    VentasRoutingModule,
+    FormsModule
+    ],
   exports:[
     PrincipalVentasComponent
   ],
   providers:[
-    InventarioService,
-    PagarService,
-    ProductoListService
+    PagarService
   ]
 })
 export class VentasModule { }

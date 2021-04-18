@@ -1,8 +1,9 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" >
     <mat-sidenav #drawer class="sidenav" fixedInViewport
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="open">
+        [opened]="!open"
+        [attr.role]="open ? 'dialog' : 'navigation'"
+        [mode]="open ? 'over' : 'side'"
+       >
   
         <img src="../../assets/imagenes/pollo.webp" class="imagen" alt="Logotipo Da&ntilde;ado" width="150">
   
@@ -31,7 +32,7 @@
           </mat-icon> 
           Inicio
         </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['/inventario']" (click)="drawer.toggle()">
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['inventarios/crear']" (click)="drawer.toggle()">
           <mat-icon>
             list_alt
           </mat-icon>
@@ -71,7 +72,8 @@
           <mat-icon >menu</mat-icon>
         </button>
         <span class="centar"> Sistema de Ventas</span>
-          <span id="botonCarro" [ngClass]=" {'mostrar': __Data.ObtenerBoton()} " [matBadge]="notificacion" matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
+          <span id="botonCarro" [ngClass]=" {'mostrar': __Data.ObtenerBoton()} " [matBadge]="notificacion" 
+          matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
             <a id="botonCarro" [routerLink]="['ventas/carrito']" style="color:white ;"> 
             <mat-icon>
               shopping_cart

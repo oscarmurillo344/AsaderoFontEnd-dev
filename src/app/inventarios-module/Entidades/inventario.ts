@@ -1,15 +1,15 @@
 import { Producto } from './producto';
 
 export class Inventario {
-    id?:number;
-    productoId:Producto;
+    id:number=0;
+    productoId:Producto|null;
     extras:string;
     cantidad:number;
     cantidadExist:number;
     estado?:boolean
 
     constructor(
-        productoId:Producto,
+        productoId:Producto|null,
         extras:string,
         cantidad:number,
         cantidadExist:number){

@@ -17,6 +17,9 @@ import { LocalstorageService } from './Services/localstorage.service';
 
 import localeEs from '@angular/common/locales/es';
 import {registerLocaleData  } from "@angular/common";
+import { ToastrModule } from 'ngx-toastr';
+import { InventariosModule } from '../inventarios-module/inventarios.module';
+
 registerLocaleData(localeEs,"es")
 
 @NgModule({
@@ -31,7 +34,13 @@ registerLocaleData(localeEs,"es")
     AppRoutingModule,
     MaterialModuleModule,
     UsuarioModule,
-    VentasModule
+    VentasModule,
+    InventariosModule,
+    ToastrModule.forRoot({
+      timeOut:2000,
+      positionClass:'toast-top-center',
+      preventDuplicates:false
+    })
   ],
   exports: [
     ErrorComponent

@@ -1,9 +1,9 @@
 <mat-card style="margin-top: 70px; ">
     <mat-card-title >Carrito N° {{numeroFactura}} </mat-card-title>
     <mat-card-subtitle class="letra">Subtotal: ({{total}} productos) $ {{valor}} 
-      <button mat-stroked-button color="warn" [routerLink]="['/lastsold']" class="derecha">
+      <a mat-stroked-button color="warn" [routerLink]="['../eliminar']" class="derecha">
         <mat-icon>history</mat-icon>
-        eliminar factura</button>
+        eliminar factura</a>
     </mat-card-subtitle>
       <table mat-table [dataSource]="lista" style="width: 100%;">
 

@@ -6,6 +6,7 @@ import { LoginUsuario } from "../Entidades/loginUsuario";
 import { Observable } from 'rxjs';
 import { jwtDTO } from '../Entidades/jwt-to';
 import { environment } from 'src/environments/environment.prod';
+import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class AuthService {
 
   public ListarUsuario():Observable<NuevoUsuario[]>{
     return this.http.get<NuevoUsuario[]>(this.authURL+'listaUsu');
+  }
+  
+  public EliminarUser(id:number): Observable<Mensaje>{
+    return this.http.delete<Mensaje>(this.authURL+'deleteuser/'+id);
   }
 }
 

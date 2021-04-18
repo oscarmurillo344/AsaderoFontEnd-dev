@@ -1,4 +1,4 @@
-import { Producto } from '../productos/producto';
+import { Producto } from "src/app/inventarios-module/Entidades/producto";
 
 export class Factura{
 
