@@ -62,7 +62,6 @@ this.local=new LocalStorage();
           }
         });
         this.__serviceinven.UpdatePollo(id,this.update).
-        pipe( takeUntil(this.undescriber)).
         subscribe(data=>{
           this.datas.pollo+=this.PollosForm.value.pollo;
           this.datas.presa+=this.PollosForm.value.presa;
@@ -70,7 +69,6 @@ this.local=new LocalStorage();
           this.toast.success(data.mensaje,"Exitoso");
           this.PollosForm.reset();
           this.__serviceinven.TablePollo(this.update2).
-          pipe( takeUntil(this.undescriber)).
           subscribe(data=>{
             this.route.navigate(["/inicio"]);
           });
@@ -83,7 +81,6 @@ this.local=new LocalStorage();
         });
       }else{
         this.__serviceinven.TablePollo(this.update).
-        pipe( takeUntil(this.undescriber)). // liberando memoria
         subscribe(data=>{
           this.route.navigate(["/inicio"]);
         });

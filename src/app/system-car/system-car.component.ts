@@ -144,9 +144,6 @@ export class SystemCarComponent implements OnInit,OnDestroy {
       }
     }
 
-    wentLastControl(){
-      this.route.navigate(["/lastsold"]);
-    }
 
     public diaSemana():string{
     let fecha:Date=new Date()
@@ -163,7 +160,7 @@ export class SystemCarComponent implements OnInit,OnDestroy {
        this.polloMerca.pollo--
        this.polloMerca.presa+=8
      }
-     if(this.polloMerca.presa >= count && this.polloMerca.pollo > 0 ){
+     if(this.polloMerca.presa >= count && this.polloMerca.pollo >= 0 ){
        this.polloMerca.presa-=count
         estado=true
      }
