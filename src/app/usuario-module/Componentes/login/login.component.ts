@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import { DataService } from 'src/app/principal-module/Services/data.service';
 import { jwtDTO } from '../../Entidades/jwt-to';
 import { LoginUsuario } from '../../Entidades/loginUsuario';
 import { AuthService } from '../../Services/auth.service';
@@ -21,8 +22,10 @@ export class LoginComponent implements OnInit {
   completar:boolean;
   
   constructor(private route:Router,private mensaje:ToastrService, 
-            private token:TokenServiceService,private Servicio_login:AuthService) 
+            private token:TokenServiceService,private Servicio_login:AuthService,
+            public __Data:DataService) 
     {
+   this.__Data.CambiarOpen(true)
    this.UserForm=this.crearFormulario();
    this.completar=true;
    }
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit {
    }
   ngOnInit() {
     if(this.token.getToken())this.route.navigate(["ventas/inicio"])
+    
   }
 
   LogIn(){
@@ -50,6 +54,7 @@ export class LoginComponent implements OnInit {
         this.roles=data.authorities;
         this.mensaje.success("sesión iniciada","información");
         this.completar=true;
+        this.__Data.CambiarOpen(true)
         this.route.navigate(["ventas/inicio"])
     },
     (err:any) =>{

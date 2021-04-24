@@ -33,9 +33,11 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
               private __servicioPro:InventarioService,
               private token:TokenServiceService,
               private __data:DataService,
-              private local: LocalstorageService
+              private local: LocalstorageService,
+              public __Data:DataService
               ) 
   {
+    this.detectarDispositivo()?this.__Data.CambiarOpen(true):this.__Data.CambiarOpen(false)
     this.platos=new Array<ListaProducto>()
     this.bebidas=new Array<ListaProducto>()
     this.combos=new Array<ListaProducto>()
@@ -73,6 +75,17 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
      },(error:any)=>{
        this.local.SetStorage("pollos",new updatePollo(0,0))
         });
+  }
+
+  detectarDispositivo():boolean{
+    var valor:boolean=false;
+      if( navigator.userAgent.match(/Android/i))
+          valor=true
+      if(navigator.userAgent.match(/webOS/i))
+          valor=false
+      if(navigator.userAgent.match(/iPhone/i))
+        valor=true
+    return valor
   }
 
   llenarListas():void

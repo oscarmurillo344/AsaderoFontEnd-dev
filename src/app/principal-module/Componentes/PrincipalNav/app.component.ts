@@ -1,7 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, window } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { LocalstorageService } from '../../Services/localstorage.service';
 import { DataService } from '../../Services/data.service';
@@ -14,7 +14,6 @@ import { DataService } from '../../Services/data.service';
 export class AppComponent implements OnInit {
   
   valor :boolean=true;
-  open :boolean=false;
   notificacion:number=0;
   Lista:any[]=[];
   vista:boolean=true;
@@ -37,11 +36,18 @@ constructor(private breakpointObserver: BreakpointObserver,
       {
       this.__Data.ObtenerItem()
       this.router.navigate(["ventas/inicio"]);
+      }else{
+        this.router.navigate(["auth/login"]);
       }
       this.__Data.notification.subscribe((numero:any)=>this.verificarNotificacion())
-      this.isHandset$.subscribe(data=>this.open=data);
+      this.isHandset$.subscribe(data=> {
+        if(this.router.url == "/auth/login")
+          this.__Data.CambiarOpen(true)
+        else
+        this.__Data.CambiarOpen(data)
+      });
     }
-
+  
   verificarNotificacion(){
       this.notificacion=0;
       if(this.local.GetStorage('DataCarrito')){
