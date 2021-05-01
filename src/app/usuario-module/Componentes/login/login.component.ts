@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import { DataService } from 'src/app/principal-module/Services/data.service';
-import { jwtDTO } from '../../Entidades/jwt-to';
-import { LoginUsuario } from '../../Entidades/loginUsuario';
-import { AuthService } from '../../Services/auth.service';
-import { TokenServiceService } from '../../Services/token-service.service';
+import { DataService } from 'src/app/principal-module/Servicios/data.service';
+import { jwtDTO } from '../../Modelos/jwt-to';
+import { LoginUsuario } from '../../Modelos/loginUsuario';
+import { AuthService } from '../../Servicios/auth.service';
+import { TokenServiceService } from '../../Servicios/token-service.service';
 
 @Component({
   selector: 'vista-login',

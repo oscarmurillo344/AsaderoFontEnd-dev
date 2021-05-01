@@ -38,17 +38,17 @@
           </mat-icon>
           Inventario
         </a>
-        <a mat-list-item routerLinkActive="active" [routerLink]="['/gastos']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" [routerLink]="['gastos/ingresar']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
           <mat-icon>
             pending_actions
           </mat-icon>
           Gastos
         </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['/ControlSold']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['control/ventas']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
           <mat-icon>
             fact_check
           </mat-icon>
-          Control de Ventas y Gastos</a>
+          Control</a>
           <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['auth/usuarios']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
             <mat-icon>
               person_add

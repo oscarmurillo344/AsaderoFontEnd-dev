@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { NuevoUsuario } from "../Entidades/nuevoUsuario";
-import { LoginUsuario } from "../Entidades/loginUsuario";
+import { NuevoUsuario } from "../Modelos/nuevoUsuario";
+import { LoginUsuario } from "../Modelos/loginUsuario";
 import { Observable } from 'rxjs';
-import { jwtDTO } from '../Entidades/jwt-to';
+import { jwtDTO } from '../Modelos/jwt-to';
 import { environment } from 'src/environments/environment.prod';
-import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
+import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
 
 @Injectable({
   providedIn: 'root'

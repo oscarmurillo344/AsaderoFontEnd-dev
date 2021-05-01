@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalstorageService } from '../../principal-module/Services/localstorage.service';
+import { LocalstorageService } from '../../principal-module/Servicios/localstorage.service';
 
 const  TOKEN_KEY="AuthToken";
 const  USERNAME_KEY="AuthUserName";

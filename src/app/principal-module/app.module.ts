@@ -12,13 +12,14 @@ import { AppComponent } from './Componentes/PrincipalNav/app.component';
 import { ErrorComponent } from './Componentes/error/error.component';
 
 import { InterceptorService } from './interceptor/interceptor.service';
-import { DataService } from './Services/data.service';
-import { LocalstorageService } from './Services/localstorage.service';
+import { DataService } from './Servicios/data.service';
+import { LocalstorageService } from './Servicios/localstorage.service';
 
 import localeEs from '@angular/common/locales/es';
 import {registerLocaleData  } from "@angular/common";
 import { ToastrModule } from 'ngx-toastr';
 import { InventariosModule } from '../inventarios-module/inventarios.module';
+import { ControlModule } from '../control-module/control.module';
 
 registerLocaleData(localeEs,"es")
 
@@ -36,6 +37,7 @@ registerLocaleData(localeEs,"es")
     UsuarioModule,
     VentasModule,
     InventariosModule,
+    ControlModule,
     ToastrModule.forRoot({
       timeOut:2000,
       positionClass:'toast-top-center',

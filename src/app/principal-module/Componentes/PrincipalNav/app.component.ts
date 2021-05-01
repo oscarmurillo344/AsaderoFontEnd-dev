@@ -3,8 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, window } from 'rxjs/operators';
 import { Router } from "@angular/router";
-import { LocalstorageService } from '../../Services/localstorage.service';
-import { DataService } from '../../Services/data.service';
+import { LocalstorageService } from '../../Servicios/localstorage.service';
+import { DataService } from '../../Servicios/data.service';
 
 @Component({
   selector: 'app-root',

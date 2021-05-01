@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
-import { Factura } from '../../Modelos/factura/factura';
+import { Factura } from '../../Modelos/factura';
 import { PagarService } from '../../Servicios/pagar.service';
 
 @Component({

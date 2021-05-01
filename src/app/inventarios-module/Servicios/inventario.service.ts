@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mensaje } from '../../principal-module/Modelos/mensaje';
 import { Inventario } from '../Modelos/inventario';
-import { updatePollo } from '../../ventas-module/Modelos/productos/updatePollo';
+import { updatePollo } from '../Modelos/updatePollo';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
