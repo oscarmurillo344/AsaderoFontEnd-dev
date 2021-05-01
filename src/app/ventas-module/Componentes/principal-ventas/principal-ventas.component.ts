@@ -1,12 +1,12 @@
 import { Component, OnInit,AfterContentInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AppComponent } from 'src/app/principal-module/Componentes/PrincipalNav/app.component';
-import { DataService } from 'src/app/principal-module/Services/data.service';
-import { LocalstorageService } from 'src/app/principal-module/Services/localstorage.service';
-import { TokenServiceService } from 'src/app/usuario-module/Services/token-service.service';
-import { Inventario } from '../../../inventarios-module/Entidades/inventario';
-import { ListaProducto } from '../../Entidades/productos/lista-producto';
-import { updatePollo } from '../../Entidades/productos/updatePollo';
+import { DataService } from 'src/app/principal-module/Servicios/data.service';
+import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
+import { TokenServiceService } from 'src/app/usuario-module/Servicios/token-service.service';
+import { Inventario } from '../../../inventarios-module/Modelos/inventario';
+import { ListaProducto } from '../../Modelos/productos/lista-producto';
+import { updatePollo } from '../../Modelos/productos/updatePollo';
 import { InventarioService } from '../../../inventarios-module/Servicios/inventario.service';
 
 @Component({

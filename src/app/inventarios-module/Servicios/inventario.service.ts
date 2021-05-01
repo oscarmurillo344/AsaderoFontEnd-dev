@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Mensaje } from '../../principal-module/Entidades/mensaje';
-import { Inventario } from '../Entidades/inventario';
-import { updatePollo } from '../../ventas-module/Entidades/productos/updatePollo';
+import { Mensaje } from '../../principal-module/Modelos/mensaje';
+import { Inventario } from '../Modelos/inventario';
+import { updatePollo } from '../../ventas-module/Modelos/productos/updatePollo';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 

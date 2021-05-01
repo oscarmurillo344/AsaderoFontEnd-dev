@@ -2,16 +2,16 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
-import { DataService } from 'src/app/principal-module/Services/data.service';
-import { LocalstorageService } from 'src/app/principal-module/Services/localstorage.service';
-import { TokenServiceService } from 'src/app/usuario-module/Services/token-service.service';
-import { Factura } from '../../Entidades/factura/factura';
-import { ListaProducto } from '../../Entidades/productos/lista-producto';
-import { updatePollo } from '../../Entidades/productos/updatePollo';
+import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
+import { DataService } from 'src/app/principal-module/Servicios/data.service';
+import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
+import { TokenServiceService } from 'src/app/usuario-module/Servicios/token-service.service';
+import { Factura } from '../../Modelos/factura/factura';
+import { ListaProducto } from '../../Modelos/productos/lista-producto';
+import { updatePollo } from '../../Modelos/productos/updatePollo';
 import { InventarioService } from '../../../inventarios-module/Servicios/inventario.service';
-import { PagarService } from '../../Services/pagar.service';
-import { Producto } from 'src/app/inventarios-module/Entidades/producto';
+import { PagarService } from '../../Servicios/pagar.service';
+import { Producto } from 'src/app/inventarios-module/Modelos/producto';
 
 @Component({
   selector: 'app-facturar-ventas',
@@ -26,7 +26,7 @@ export class FacturarVentasComponent implements OnInit {
    displayedColumns=['eliminar','nombre','restar','cantidad','sumar']
    factura?:Factura;
    numeroFactura:number=0
-   mms?:Mensaje;
+   mms!:Mensaje;
    contador:number=0;
    polloMerca:updatePollo;
    bloqueo?:boolean;

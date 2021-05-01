@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
-import { NuevoUsuario } from '../../Entidades/nuevoUsuario';
-import { AuthService } from '../../Services/auth.service';
+import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
+import { NuevoUsuario } from '../../Modelos/nuevoUsuario';
+import { AuthService } from '../../Servicios/auth.service';
 import { DialogoYesNoComponent } from '../dialogo-yes-no/dialogo-yes-no.component';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Factura } from '../Entidades/factura/factura';
-import { Mensaje } from '../../principal-module/Entidades/mensaje';
+import { Factura } from '../Modelos/factura/factura';
+import { Mensaje } from '../../principal-module/Modelos/mensaje';
 import { Observable } from 'rxjs';
-import { VentasDay } from '../Entidades/factura/VentasDay';
-import { EntreFecha } from '../Entidades/factura/EntreFecha';
+import { VentasDay } from '../Modelos/factura/VentasDay';
+import { EntreFecha } from '../Modelos/factura/EntreFecha';
 import { environment } from 'src/environments/environment.prod';
 
 

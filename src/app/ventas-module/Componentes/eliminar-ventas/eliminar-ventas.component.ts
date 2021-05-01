@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
-import { Factura } from '../../Entidades/factura/factura';
-import { PagarService } from '../../Services/pagar.service';
+import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
+import { Factura } from '../../Modelos/factura/factura';
+import { PagarService } from '../../Servicios/pagar.service';
 
 @Component({
   selector: 'app-eliminar-ventas',

@@ -5,9 +5,7 @@ import { VentasRoutingModule } from './ventas-routing.module';
 import { MaterialModuleModule } from '../material-module/material-module.module';
 
 
-import { InventarioService } from '../inventarios-module/Servicios/inventario.service';
-import { PagarService } from './Services/pagar.service';
-import { ProductoListService } from '../inventarios-module/Servicios/producto-list.service';
+import { PagarService } from './Servicios/pagar.service';
 
 import { PrincipalVentasComponent } from './Componentes/principal-ventas/principal-ventas.component';
 import { FacturarVentasComponent } from './Componentes/facturar-ventas/facturar-ventas.component';

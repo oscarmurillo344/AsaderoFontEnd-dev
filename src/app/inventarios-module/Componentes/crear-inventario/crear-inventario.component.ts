@@ -4,15 +4,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { AppComponent } from 'src/app/principal-module/Componentes/PrincipalNav/app.component';
-import { Inventario } from 'src/app/inventarios-module/Entidades/inventario';
+import { Inventario } from 'src/app/inventarios-module/Modelos/inventario';
 import { InventarioService } from 'src/app/inventarios-module/Servicios/inventario.service';
-import { LocalstorageService } from 'src/app/principal-module/Services/localstorage.service';
+import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
+import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
 import { DialogoUpdateComponent } from '../dialogo-update/dialogo-update.component';
 import { DialogoYesNoComponent } from 'src/app/usuario-module/Componentes/dialogo-yes-no/dialogo-yes-no.component';
-import { Producto } from '../../Entidades/producto';
+import { Producto } from '../../Modelos/producto';
 
 @Component({
   selector: 'app-crear-inventario',

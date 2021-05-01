@@ -4,12 +4,12 @@ import {MAT_DIALOG_DATA  } from  '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Subject } from 'rxjs';
 import { AppComponent } from 'src/app/principal-module/Componentes/PrincipalNav/app.component';
-import { LocalstorageService } from 'src/app/principal-module/Services/localstorage.service';
-import { Inventario } from 'src/app/inventarios-module/Entidades/inventario';
-import { Producto } from '../../Entidades/producto';
+import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
+import { Inventario } from 'src/app/inventarios-module/Modelos/inventario';
+import { Producto } from '../../Modelos/producto';
 import { ProductoListService } from '../../Servicios/producto-list.service';
 import { InventarioService } from '../../Servicios/inventario.service';
-import { Mensaje } from 'src/app/principal-module/Entidades/mensaje';
+import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
 
 
 
