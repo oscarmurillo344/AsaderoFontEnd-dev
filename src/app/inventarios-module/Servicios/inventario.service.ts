@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mensaje } from '../../principal-module/Modelos/mensaje';
 import { Inventario } from '../Modelos/inventario';
 import { updatePollo } from '../Modelos/updatePollo';
-import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -13,6 +12,8 @@ import { environment } from 'src/environments/environment.prod';
 export class InventarioService {
   
   urlInven=environment.Url+"inventario/";
+  EventoCargarInventario =new EventEmitter<string>();
+
   constructor(private http:HttpClient) { }
 
   public ingresarInventario(inven:Inventario):Observable<Mensaje>{
@@ -41,15 +42,4 @@ export class InventarioService {
   public listarpollo():Observable<updatePollo>{
     return this.http.get<updatePollo>(this.urlInven+'pollopresa');
   }
-
-  private _listen=new Subject<any>();
-  
-    listen():Observable<any>{
-    return this._listen.asObservable();
-      }
-
-    filter(filterBy:string){
-      this._listen.next(filterBy);
-    }
-
 }

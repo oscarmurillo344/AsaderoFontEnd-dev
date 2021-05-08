@@ -81,7 +81,7 @@ export class DialogoUpdateComponent implements OnInit,OnDestroy {
         )
       .subscribe((data:[Mensaje,any])=>{
             this.mensaje.success(data[0].mensaje+' e '+data[0].mensaje,"Exitoso");
-            this.__servicioInventario.filter('Register click');
+            this.__servicioInventario.EventoCargarInventario.emit("ok");
       },error=>{
         this.mensaje.error(error.error.mensaje,"Error");
       });

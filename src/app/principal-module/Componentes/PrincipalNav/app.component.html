@@ -12,7 +12,7 @@
         </h1>      
          
       <mat-nav-list >
-            <mat-expansion-panel mat-list-item routerLinkActive="active" hideToggle>
+            <mat-expansion-panel routerLinkActive="active" hideToggle>
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>
@@ -23,9 +23,9 @@
               </mat-expansion-panel-header>
                 <span style="margin-top: 5%;">Pollo: {{__Data.pollo}} </span>
                 <span style="margin-left: 5%;">Presa: {{__Data.presa}} </span>
-                  <button [routerLink]="['/updatep']" mat-button color="warn" (click)="__Data.ObtenerOpen()?drawer.toggle():''" style="width: 100%;">Next</button>
+                <button [routerLink]="['inventarios/actualizarmerca']" mat-button color="warn" 
+                (click)="__Data.ObtenerOpen()?drawer.toggle():''">Actualizar pollos</button>
             </mat-expansion-panel>
-        <mat-divider></mat-divider>
         <a mat-list-item [routerLink]="['ventas/inicio']" (click)="__Data.ObtenerOpen()?drawer.toggle():''" routerLinkActive="active">
           <mat-icon>
             home
@@ -44,7 +44,7 @@
           </mat-icon>
           Gastos
         </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['control/ventas']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['control/controlventas']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
           <mat-icon>
             fact_check
           </mat-icon>
@@ -63,18 +63,15 @@
     </mat-sidenav>
     <mat-sidenav-content class="contenedor">
       <mat-toolbar class="header Fixed" >
-        <button id="boton"
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
+        <button mat-icon-button
           (click)="drawer.toggle()"
-           [ngClass]=" {'mostrar': __Data.ObtenerBoton()} ">
+           *ngIf="!__Data.ObtenerBoton()">
           <mat-icon >menu</mat-icon>
         </button>
         <span class="centar"> Sistema de Ventas</span>
-          <span id="botonCarro" [ngClass]=" {'mostrar': __Data.ObtenerBoton()} " [matBadge]="notificacion" 
+          <span *ngIf="!__Data.ObtenerBoton()" [matBadge]="notificacion" 
           matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
-            <a id="botonCarro" [routerLink]="['ventas/carrito']" style="color:white ;"> 
+            <a  [routerLink]="['ventas/carrito']" style="color:white ;"> 
             <mat-icon>
               shopping_cart
             </mat-icon>
