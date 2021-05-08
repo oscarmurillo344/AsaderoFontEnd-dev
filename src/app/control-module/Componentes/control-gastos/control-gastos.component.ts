@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Gastos } from 'src/app/gastos-module/Modelos/gastos';
 import { GastosX } from 'src/app/gastos-module/Modelos/gastosX';
@@ -18,8 +18,8 @@ import { NuevoUsuario } from 'src/app/usuario-module/Modelos/nuevoUsuario';
   styleUrls: ['./control-gastos.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({height: '*', visibility: 'hidden' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -32,7 +32,6 @@ export class ControlGastosComponent implements OnInit {
   valorGasto:number=0;
   GastosColumns: string[] = ['No', 'tipo', 'valor','eliminar'];
   cerrado:boolean | undefined;
-  gastos!:Gastos | null;
   complete:boolean;
   tipoForm:FormGroup;
   gastosx!:GastosX;
@@ -69,6 +68,7 @@ export class ControlGastosComponent implements OnInit {
       end:new FormControl(new Date(),Validators.required)
     });
   }
+
   inicializarPaginatorGastos():void {
    setTimeout(()=> this.DataGastos.paginator = this.paginatorGastos);
   }
@@ -115,7 +115,7 @@ export class ControlGastosComponent implements OnInit {
         this.__gastos.listarUserFecha(this.gastosx).
         pipe( takeUntil(this.unsuscribir)).
         subscribe((data:Gastos[])=>{
-          this.DataGastos=new MatTableDataSource(data);
+          this.DataGastos=new MatTableDataSource(data)
           this.inicializarPaginatorGastos();
           this.getTotalCostosGastos();
           this.complete=true;

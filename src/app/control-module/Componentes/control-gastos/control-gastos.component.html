@@ -53,43 +53,46 @@
         <input matInput (keyup)="applyFilter($event)" #input>
       </mat-form-field>
 
-<table *ngIf="complete; else progress" mat-table [dataSource]="DataGastos" multiTemplateDataRows>
-
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of GastosColumns">
-    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-    <td mat-footer-cell *matFooterCellDef>{{(column==='valor')?valorGasto:'' | currency }}  </td>
+<table *ngIf="complete; else progress" mat-table [dataSource]="DataGastos">
+  
+  <ng-container matColumnDef="No">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    <td mat-footer-cell *matFooterCellDef> Total  </td>
   </ng-container>
 
-  <ng-container matColumnDef="detailExpand">
-    <td mat-cell *matCellDef="let element ; index as i" [attr.colspan]="GastosColumns.length">
-      <div class="example-element-detail"
-           [@detailExpand]="element == gastos ? 'expanded' : 'collapsed'">
-          <div > {{ i+1}} </div>
-          <div > {{element.tipo }} </div>
-          <div>  {{element.valor | currency}}</div>
-            <button  mat-mini-fab color="warn" (click)="Eliminar(i)" >
-              <mat-icon>
-                delete
-              </mat-icon>
-            </button>
-        <div class="example-element-description">
-          {{element.descripcion}}
-        </div>
-      </div>
-    </td>
-  </ng-container>      
+  <ng-container matColumnDef="tipo">
+    <th mat-header-cell *matHeaderCellDef> Tipo </th>
+    <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+    <td mat-footer-cell *matFooterCellDef> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="valor">
+    <th mat-header-cell *matHeaderCellDef> Valor </th>
+    <td mat-cell *matCellDef="let element"> {{element.valor}} </td>
+    <td mat-footer-cell *matFooterCellDef>{{valorGasto | currency}}  </td>
+  </ng-container>
+
+  <ng-container matColumnDef="eliminar">
+    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+    <td mat-cell *matCellDef="let element"> 
+      <button  mat-mini-fab color="warn" (click)="Eliminar(i)" >
+      <mat-icon>
+        delete
+      </mat-icon>
+    </button>   
+  </td>
+  <td mat-footer-cell *matFooterCellDef> </td>
+  </ng-container> 
+  
         <tr mat-header-row *matHeaderRowDef="GastosColumns;"></tr>
-        <tr mat-row *matRowDef="let row; columns: GastosColumns;"
-            class="example-element-row"
-            [class.example-expanded-row]="gastos === element"
-            (click)="gastos = gastos === element ? null : element"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['detailExpand']" class="example-detail-row"></tr>
-        <tr mat-footer-row *matFooterRowDef="GastosColumns; sticky:true"></tr>
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No existe gastos...</td>
+        <tr mat-row *matRowDef="let row; columns: GastosColumns;"></tr>
+        <tr mat-row *matNoDataRow>
+          <td mat-cell colspan="4">No existe gastos...</td>
         </tr>
-        </table>
+        <tr mat-footer-row *matFooterRowDef="GastosColumns; sticky:true"></tr>
+        
+ </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         <ng-template #progress >
           <mat-spinner color="warn" style="margin: auto; margin-top: 50px;"></mat-spinner>
