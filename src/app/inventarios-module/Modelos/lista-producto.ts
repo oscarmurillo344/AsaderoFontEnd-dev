@@ -8,8 +8,7 @@ export class ListaProducto {
     presa:number
     extra:string;
     
-    constructor(id:number,producto:string,tipo:string,cantidadexiste:number,precio:number,p:number
-        ,extra:string){
+    constructor(id:number,producto:string,tipo:string,cantidadexiste:number,precio:number,p:number,extra:string){
         this.id=id;
         this.nombre=producto;
         this.tipo=tipo;

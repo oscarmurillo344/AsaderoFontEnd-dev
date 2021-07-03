@@ -26,7 +26,7 @@
                 <mat-label class="margen">Seleccione producto: </mat-label>
                 <mat-checkbox  *ngFor="let producto of ComboInventario"
                 (change)="valueChange($event)" [value]="producto?.id" class="margen">
-                     {{ producto.productoId?.nombre }}
+                     {{ producto.producto?.nombre }}
                 </mat-checkbox> 
                 </cdk-virtual-scroll-viewport>
                 <mat-form-field appearance="standard" style="width: 100%;" >

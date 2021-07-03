@@ -44,10 +44,10 @@ export class IngresarMercaderiaComponent implements OnInit {
      this.update=new updatePollo(this.PollosForm.value.pollo,
       this.PollosForm.value.presa)
       if(!this.PollosForm.value.validar){
-        let id: number=0
+        
         this.productLista=this.local.GetStorage("listaProducto");
-        this.productLista.forEach((data:Inventario)=> data.productoId?.tipo==='mercaderia' ?id=data.id:id=0)
-        this.__serviceinven.UpdatePollo(id,this.update). 
+        var inventario = this.productLista.find((data:Inventario)=> data.producto?.tipo==='mercaderia' )
+        this.__serviceinven.UpdatePollo(inventario?.id == undefined? 0:inventario.id,this.update). 
         subscribe(data=>{
           this.datas.pollo+=this.PollosForm.value.pollo;
           this.datas.presa+=this.PollosForm.value.presa;
@@ -55,7 +55,10 @@ export class IngresarMercaderiaComponent implements OnInit {
           this.toast.success(data.mensaje,"Exitoso");
           this.PollosForm.reset();
           this.__serviceinven.TablePollo(this.update2).
-          subscribe(data=>this.route.navigate(["ventas/inicio"]));
+                subscribe(data=>this.route.navigate(["ventas/inicio"]),error =>{
+                  if(error.error.mensaje===undefined) this.toast.error("Error en la consulta","Error");
+                  else this.toast.error(error.error.mensaje,"Error");
+                })
         },error=>{
           if(error.error.mensaje===undefined) this.toast.error("Error en la consulta","Error");
           else this.toast.error(error.error.mensaje,"Error");

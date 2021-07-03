@@ -2,21 +2,21 @@ import { Producto } from './producto';
 
 export class Inventario {
     id:number=0;
-    productoId:Producto|null;
+    producto:Producto;
     extras:string;
     cantidad:number;
-    cantidadExist:number;
+    cantidadExiste:number;
+    cantidadTotal:number=0;
     estado?:boolean
 
     constructor(
-        productoId:Producto|null,
+        producto:Producto,
         extras:string,
         cantidad:number,
         cantidadExist:number){
-            this.productoId=productoId;
+            this.producto=producto;
             this.extras=extras;
             this.cantidad=cantidad;
-            this.cantidadExist=cantidadExist;
-
+            this.cantidadExiste=cantidadExist;
     }
 }

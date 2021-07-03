@@ -37,28 +37,28 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
               public __Data:DataService
               ) 
   {
-    this.detectarDispositivo()?this.__Data.CambiarOpen(true):this.__Data.CambiarOpen(false)
+    this.__Data.CambiarVerNavegador(this.detectarDispositivo())
     this.platos=new Array<ListaProducto>()
     this.bebidas=new Array<ListaProducto>()
     this.combos=new Array<ListaProducto>()
     this.porciones=new Array<ListaProducto>()
     this.carrito=new Array<ListaProducto>()
     this.productLista=new Array<Inventario>()
+    this.roles=this.token.getAuth()
+    this.tokens=this.token.getToken()
     }
  
    
   ngAfterContentInit() {
       setTimeout(() => {
-        this.roles.filter(data=> data=='ROLE_ADMIN'? this.__data.CambiarItem(true):null)
+        this.roles.filter(data=> data=='ROLE_ADMIN'? this.__data.CambiarItemsMenu(true):null)
         this.__data.notification.emit(1);
-        this.__data.CambiarBoton(false)
         this.__data.nombreUsuario=this.token.getUser();
       });
     }
 
   ngOnInit() {
-    this.roles=this.token.getAuth();
-    this.tokens=this.token.getToken();
+
     this.llenarListas();
     if(this.local.GetStorage('DataCarrito'))this.carrito=this.local.GetStorage('DataCarrito');
     this.__servicioPro.listarpollo()
@@ -78,7 +78,7 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
   }
 
   detectarDispositivo():boolean{
-    var valor:boolean=false;
+    var valor=false;
       if( navigator.userAgent.match(/Android/i))
           valor=true
       if(navigator.userAgent.match(/webOS/i))
@@ -93,14 +93,14 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
     this.productLista=this.local.GetStorage("listaProducto");
     if(this.productLista){
       this.productLista=this.local.GetStorage("listaProducto");
-      this.llenarTabla(this.productLista);
+      this.llenarTabla();
       this.complete=true;
     }else{  
     this.__servicioPro.listarInventartio()
-    .subscribe((data:any) => {
+    .subscribe((data:Inventario[]) => {
       this.local.SetStorage("listaProducto",data);
      this.productLista=this.local.GetStorage("listaProducto");
-     this.llenarTabla(this.productLista);
+     this.llenarTabla();
       this.complete=true;
     },(err:any) =>{
       this.mensaje.error("Cargando los productos","Error");
@@ -110,54 +110,54 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
     }
   }
 
-  llenarTabla(data:any):void{
+  llenarTabla():void{
     for (let index = 0; index < this.productLista.length ;index++) {
-      switch (data[index].productoId.tipo) {
+      switch (this.productLista[index].producto.tipo) {
         case 'platos':
-          this.platos.push(new ListaProducto(data[index].productoId.id,
-            data[index].productoId.nombre,
-            data[index].productoId.tipo,
-            data[index].cantidadExist,
-            data[index].productoId.precio,
-            data[index].productoId.presa,
-            data[index].extras
+          this.platos.push(new ListaProducto(this.productLista[index].producto.id,
+            this.productLista[index].producto.nombre,
+            this.productLista[index].producto.tipo,
+            this.productLista[index].cantidadExiste,
+            this.productLista[index].producto.precio,
+            this.productLista[index].producto.presa,
+            this.productLista[index].extras
             ));
             AppComponent.OrdenarData2(this.platos);
           break;
       
         case 'bebidas':
-          this.bebidas.push(new ListaProducto(data[index].productoId.id,
-            data[index].productoId.nombre,
-            data[index].productoId.tipo,
-            data[index].cantidadExist,
-            data[index].productoId.precio,
-            data[index].productoId.presa,
-            data[index].extras
+          this.bebidas.push(new ListaProducto(this.productLista[index].producto.id,
+            this.productLista[index].producto.nombre,
+            this.productLista[index].producto.tipo,
+            this.productLista[index].cantidadExiste,
+            this.productLista[index].producto.precio,
+            this.productLista[index].producto.presa,
+            this.productLista[index].extras
             ));
             AppComponent.OrdenarData2(this.bebidas);
           break;
           
         case 'combos':
-          this.combos.push(new ListaProducto(data[index].productoId.id,
-            data[index].productoId.nombre,
-            data[index].productoId.tipo,
-            data[index].cantidadExist,
-            data[index].productoId.precio,
-            data[index].productoId.presa,
-            data[index].extras
+          this.combos.push(new ListaProducto(this.productLista[index].producto.id,
+            this.productLista[index].producto.nombre,
+            this.productLista[index].producto.tipo,
+            this.productLista[index].cantidadExiste,
+            this.productLista[index].producto.precio,
+            this.productLista[index].producto.presa,
+            this.productLista[index].extras
             ));
             AppComponent.OrdenarData2(this.combos);
           break;
           
         case 'porciones':
-          data[index].cantidad=1;
-          this.porciones.push(new ListaProducto(data[index].productoId.id,
-            data[index].productoId.nombre,
-            data[index].productoId.tipo,
-            data[index].cantidadExist,
-            data[index].productoId.precio,
-            data[index].productoId.presa,
-            data[index].extras
+          this.productLista[index].cantidad=1;
+          this.porciones.push(new ListaProducto(this.productLista[index].producto.id,
+            this.productLista[index].producto.nombre,
+            this.productLista[index].producto.tipo,
+            this.productLista[index].cantidadExiste,
+            this.productLista[index].producto.precio,
+            this.productLista[index].producto.presa,
+            this.productLista[index].extras
             ));
             AppComponent.OrdenarData2(this.porciones);
           break;

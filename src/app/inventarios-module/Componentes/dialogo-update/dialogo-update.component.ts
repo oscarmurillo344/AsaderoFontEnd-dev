@@ -58,30 +58,30 @@ export class DialogoUpdateComponent implements OnInit,OnDestroy {
     }
 
     return new FormGroup({
-      nombre: new FormControl(data.productoId.nombre,Validators.required),
-      tipo: new FormControl(data.productoId.tipo,Validators.required),
+      nombre: new FormControl(data.producto.nombre,Validators.required),
+      tipo: new FormControl(data.producto.tipo,Validators.required),
       cantidad:new FormControl(data.cantidad,[Validators.required,Validators.pattern('^[0-9]+')]),
-      precio: new FormControl(data.productoId.precio,Validators.required),
-      presa: new FormControl(data.productoId.presa,[Validators.required,Validators.pattern('^[0-9]+')])
+      precio: new FormControl(data.producto.precio,Validators.required),
+      presa: new FormControl(data.producto.presa,[Validators.required,Validators.pattern('^[0-9]+')])
     });
   }
   ActualizarProduct(){
     if(this.UpdateProductForm.valid){
-     let id=this.producto.productoId?.id || 0;
+     let id=this.producto.producto.id || 0;
      let idd=this.producto.id || 0;
       this.pro=new Producto(id,
         this.UpdateProductForm.value.nombre,this.UpdateProductForm.value.tipo,
         this.UpdateProductForm.value.precio,this.UpdateProductForm.value.presa);
         forkJoin( this.__servicioProduct.ActualizarProducto(id,this.pro),
         this.__servicioInventario.UpdateInventario(idd,
-          new Inventario(null,
+          new Inventario(this.pro,
           this.lista.toString(),
           this.UpdateProductForm.value.cantidad,
           this.UpdateProductForm.value.cantidad))
         )
       .subscribe((data:[Mensaje,any])=>{
             this.mensaje.success(data[0].mensaje+' e '+data[0].mensaje,"Exitoso");
-            this.__servicioInventario.EventoCargarInventario.emit("ok");
+            this.__servicioInventario.EventoCargarInventario.emit("CargarInventario")
       },error=>{
         this.mensaje.error(error.error.mensaje,"Error");
       });
@@ -95,7 +95,7 @@ export class DialogoUpdateComponent implements OnInit,OnDestroy {
   }
   CargarCombo():void{
     this.CombInventario=this.local.GetStorage("listaProducto");
-    this.CombInventario.forEach((data,index)=> data.productoId?.tipo=='combos'? this.CombInventario.splice(index,1): undefined)
+    this.CombInventario.forEach((data,index)=> data.producto?.tipo=='combos'? this.CombInventario.splice(index,1): undefined)
     this.estadoProducto(this.lista,this.CombInventario)
     AppComponent.OrdenarData(this.CombInventario);
 }

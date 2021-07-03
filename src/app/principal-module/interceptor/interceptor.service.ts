@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent} from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenServiceService } from '../../usuario-module/Servicios/token-service.service';
 
@@ -20,6 +20,14 @@ export class InterceptorService implements HttpInterceptor {
         "Content-Type": "application/json"
       }
      })
+   }else{
+    const credenciales=btoa('AngularVentasAsadero'+':'+'Andy$_2003_$')
+    intreq = req.clone({
+     setHeaders:{
+      "Content-Type": "application/x-www-form-urlencoded",
+      'Authorization':"Basic "+credenciales
+     }
+    });
    }
    return next.handle(intreq);
   }

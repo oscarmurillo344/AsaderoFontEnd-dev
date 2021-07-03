@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalstorageService } from '../../principal-module/Servicios/localstorage.service';
+import { jwtDTO } from '../Modelos/jwt-to';
 
 const  TOKEN_KEY="AuthToken";
 const  USERNAME_KEY="AuthUserName";
@@ -44,11 +45,23 @@ export class TokenServiceService {
 
     if (this.local.GetStorage(AUTHORITIES_KEY)){
       this.local.GetStorage(AUTHORITIES_KEY).forEach((authority:any) => {
-        this.roles.push(authority.authority);
+        this.roles.push(authority);
       });
     }
 
     return this.roles;
   }
 
-}
+  public ObtenerData():any{
+    return JSON.parse(atob(this.getToken().split('.')[1]))
+  }
+
+    TokenExpirado():boolean{
+      let payload = this.ObtenerData()
+      let hoy = new Date().getTime() / 1000
+      if(payload.exp < hoy){
+        return true
+      }
+      return false
+    }
+  }

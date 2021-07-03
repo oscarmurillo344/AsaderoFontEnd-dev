@@ -1,9 +1,8 @@
 <mat-sidenav-container class="sidenav-container" >
     <mat-sidenav #drawer class="sidenav" fixedInViewport
-        [opened]="!__Data.ObtenerOpen()"
-        [attr.role]="__Data.ObtenerOpen() ? 'dialog' : 'navigation'"
-        [mode]="__Data.ObtenerOpen() ? 'over' : 'side'"
-       >
+        [opened]="!__Data.ObtenerVerNavegador()"
+        [attr.role]="__Data.ObtenerVerNavegador() ? 'dialog' : 'navigation'"
+        [mode]="__Data.ObtenerVerNavegador() ? 'over' : 'side'">
   
         <img src="../../assets/imagenes/pollo.webp" class="imagen" alt="Logotipo Da&ntilde;ado" width="150">
   
@@ -24,37 +23,37 @@
                 <span style="margin-top: 5%;">Pollo: {{__Data.pollo}} </span>
                 <span style="margin-left: 5%;">Presa: {{__Data.presa}} </span>
                 <button [routerLink]="['inventarios/actualizarmerca']" mat-button color="warn" 
-                (click)="__Data.ObtenerOpen()?drawer.toggle():''">Actualizar pollos</button>
+                (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">Actualizar pollos</button>
             </mat-expansion-panel>
-        <a mat-list-item [routerLink]="['ventas/inicio']" (click)="__Data.ObtenerOpen()?drawer.toggle():''" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['ventas/inicio']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''" routerLinkActive="active">
           <mat-icon>
             home
           </mat-icon> 
           Inicio
         </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['inventarios/crear']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItemsMenu()" [routerLink]="['inventarios/crear']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
           <mat-icon>
             list_alt
           </mat-icon>
           Inventario
         </a>
-        <a mat-list-item routerLinkActive="active" [routerLink]="['gastos/ingresar']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" [routerLink]="['gastos/ingresar']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
           <mat-icon>
             pending_actions
           </mat-icon>
           Gastos
         </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['control/controlventas']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItemsMenu()" [routerLink]="['control/controlventas']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
           <mat-icon>
             fact_check
           </mat-icon>
           Control</a>
-          <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItem()" [routerLink]="['auth/usuarios']" (click)="__Data.ObtenerOpen()?drawer.toggle():''">
+          <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItemsMenu()" [routerLink]="['auth/usuarios']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
             <mat-icon>
               person_add
             </mat-icon>
             Usuarios</a>
-        <a mat-list-item routerLinkActive="active" (click)="logOut()"(click)="__Data.ObtenerOpen()?drawer.toggle():''">
+        <a mat-list-item routerLinkActive="active" (click)="logOut()" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
           <mat-icon>
             exit_to_app
           </mat-icon>
@@ -65,11 +64,11 @@
       <mat-toolbar class="header Fixed" >
         <button mat-icon-button
           (click)="drawer.toggle()"
-           *ngIf="!__Data.ObtenerBoton()">
+           *ngIf="!__Data.ObtenerBotonMenu()">
           <mat-icon >menu</mat-icon>
         </button>
         <span class="centar"> Sistema de Ventas</span>
-          <span *ngIf="!__Data.ObtenerBoton()" [matBadge]="notificacion" 
+          <span *ngIf="!__Data.ObtenerBotonCarrito()" [matBadge]="notificacion" 
           matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
             <a  [routerLink]="['ventas/carrito']" style="color:white ;"> 
             <mat-icon>

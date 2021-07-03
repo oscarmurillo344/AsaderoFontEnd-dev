@@ -1,32 +1,27 @@
-import { Producto } from "../../inventarios-module/Modelos/producto";
+import { FacturaItems } from "./FacturaItems";
 
 export class Factura{
 
-    id?:number;
-    numeroFact:number;
-    usuarioId:string;
-    datenow:Date; 
-    tiempoactual?:Date;
-    dia:string;   
-    productoId:Producto;
-    cantidad:number;
-    extras:string;
+    private id!:number
+    private numeroFactura:number
+    private usuarioId:string
+    private FormaPago:string
+    private FechaIngreso:Date
+    private HoraIngreso:Date
+    private DiaIngreso:string
+    private facturaItem:Array<FacturaItems>
 
-    constructor(
-        numeroFact:number,
-        datenow:Date,
-        usuarioId:string,
-        dia:string,
-        producto:Producto,
-        cantidad:number,
-        extras:string){
-            this.numeroFact=numeroFact;
-            this.datenow=datenow;
-            this.dia=dia;
-            this.usuarioId=usuarioId;
-            this.productoId=producto;
-            this.cantidad=cantidad;
-            this.extras=extras;
-
+    constructor(numeroFact:number,
+                usuarioId:string,
+                FormaPago:string,
+                DiaIngreso:string,
+                facturaItem:Array<FacturaItems>){
+        this.numeroFactura = numeroFact;
+        this.usuarioId = usuarioId
+        this.FormaPago = FormaPago
+        this.FechaIngreso = new Date
+        this.HoraIngreso = new Date
+        this.DiaIngreso = DiaIngreso
+        this.facturaItem = facturaItem
     }
 }

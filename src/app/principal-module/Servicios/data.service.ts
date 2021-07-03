@@ -8,28 +8,37 @@ export class DataService {
   nombreUsuario:string='default';
   pollo:number=0;
   presa:number=0;
-  open :boolean=false;
-  itemNav:boolean=false
-  botonesNav:boolean=true
+  VerBotonMenu :boolean=true
+  VerBotonCarrito :boolean=true
+  VerItemsMenu:boolean=true
+  VerNavegador:boolean=true
   notification = new EventEmitter<number>();
   constructor() { 
   }
-    CambiarOpen(valor:boolean){
-      this.open=valor
+    CambiarBotonMenu(valor:boolean){
+      this.VerBotonMenu=valor
     }
-    ObtenerOpen(){
-     return this.open 
+    ObtenerBotonMenu(){
+     return this.VerBotonMenu 
     }
-    CambiarItem(valor:boolean){
-    this.itemNav=valor 
+    CambiarItemsMenu(valor:boolean){
+    this.VerItemsMenu=valor 
     }
-    ObtenerItem():boolean{
-      return this.itemNav
+    ObtenerItemsMenu():boolean{
+      return this.VerItemsMenu
     }
-    CambiarBoton(valor:boolean){
-      this.botonesNav=valor 
+
+    ObtenerBotonCarrito():boolean{
+      return this.VerBotonCarrito
     }
-    ObtenerBoton():boolean{
-      return this.botonesNav
+    CambiarBotonCarrito(valor:boolean){
+      this.VerBotonCarrito=valor 
+      }
+
+    ObtenerVerNavegador():boolean{
+      return this.VerNavegador
     }
+    CambiarVerNavegador(valor:boolean){
+      this.VerNavegador=valor 
+      }
 }

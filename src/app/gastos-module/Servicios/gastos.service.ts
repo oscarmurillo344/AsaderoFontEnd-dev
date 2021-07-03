@@ -31,7 +31,7 @@ export class GastosService {
   }
 
   public Eliminar(id:number): Observable<Mensaje>{
-    return this.http.delete<Mensaje>(this.URLgasto+'delete/'+id);
+    return this.http.delete<Mensaje>(this.URLgasto+'eliminar/'+id);
   }
 
   public Listar(): Observable<Gastos[]>{

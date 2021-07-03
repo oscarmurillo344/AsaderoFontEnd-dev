@@ -17,29 +17,29 @@ export class InventarioService {
   constructor(private http:HttpClient) { }
 
   public ingresarInventario(inven:Inventario):Observable<Mensaje>{
-    return this.http.post<Mensaje>(this.urlInven+'addInventario',inven);
+    return this.http.post<Mensaje>(this.urlInven+'ingresar',inven);
   }
   public listarInventartio():Observable<Inventario[]>{
     return this.http.get<Inventario[]>(this.urlInven+'lista');
   }
 
   public UpdateInventario(id:number,inven:Inventario):Observable<Mensaje>{
-    return this.http.put<Mensaje>(this.urlInven+'updateinventario/'+id,inven);
+    return this.http.put<Mensaje>(this.urlInven+'actualizar/'+id,inven);
   }
 
   public EliminarInventario(id:number):Observable<Mensaje>{
- return this.http.delete<Mensaje>(this.urlInven+'delete/'+id); 
+ return this.http.delete<Mensaje>(this.urlInven+'eliminar/'+id); 
   }
 
   public UpdatePollo(id:number,inven:updatePollo):Observable<Mensaje>{
-    return this.http.put<Mensaje>(this.urlInven+'updatepollo/'+id,inven);
+    return this.http.put<Mensaje>(this.urlInven+'pollo/'+id,inven);
   }
 
   public TablePollo(inven:updatePollo):Observable<Mensaje>{
-    return this.http.put<Mensaje>(this.urlInven+'pollotable/',inven);  
+    return this.http.put<Mensaje>(this.urlInven+'pollo/',inven);  
   }
 
   public listarpollo():Observable<updatePollo>{
-    return this.http.get<updatePollo>(this.urlInven+'pollopresa');
+    return this.http.get<updatePollo>(this.urlInven+'pollo/lista');
   }
 }

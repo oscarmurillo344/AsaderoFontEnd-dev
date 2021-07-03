@@ -10,6 +10,7 @@ import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
 import { Producto } from '../../Modelos/producto';
+import { ProductoListService } from '../../Servicios/producto-list.service';
 
 @Component({
   selector: 'app-crear-inventario',
@@ -27,32 +28,26 @@ export class CrearInventarioComponent implements OnInit {
   constructor(
     private mensaje:ToastrService,
     private __inventarioService:InventarioService,
+    private __productoService:ProductoListService,
     private local:LocalstorageService
     ) { 
       this.ProductForm=this.createForm();
-      this.cargarCantidad();
   }
+  
   ngOnDestroy(): void {
     this.unsuscribir.next();
     this.unsuscribir.complete();
   }
 
   ngOnInit() {
-    this.__inventarioService.EventoCargarInventario.pipe(takeUntil(this.unsuscribir)
-    ).subscribe((m:any)=>this.cargarCantidad())
+    this.__inventarioService.EventoCargarInventario.pipe(takeUntil(this.unsuscribir)).
+    subscribe(evento=>evento=="combo"?this.CargarCombo():null);
   }
   
-  cargarCantidad(){
-   this.__inventarioService.listarInventartio()
-   .subscribe((data:Inventario[])=>{
-        this.local.SetStorage("listaProducto",data);
-        this.CargarCombo();
-      },error=> this.MensajeError(error));
-  }
-  
+
   CargarCombo(){
       this.ComboInventario=this.local.GetStorage("listaProducto");
-      this.ComboInventario.forEach((data,index)=> data.productoId?.tipo=='combos' ? this.ComboInventario.splice(index,1):undefined)
+      this.ComboInventario.forEach((data,index)=> data.producto?.tipo=='combos' ? this.ComboInventario.splice(index,1):undefined)
       AppComponent.OrdenarData(this.ComboInventario);
   }
   createForm(){
@@ -71,13 +66,15 @@ export class CrearInventarioComponent implements OnInit {
         this.ProductForm.value.tipo,
         this.ProductForm.value.precio,
         this.ProductForm.value.presa);
-    forkJoin(this.__inventarioService.ingresarInventario(new Inventario(this.product,this.lista.toString(),0,0)),
-    this.__inventarioService.listarInventartio())
-     .subscribe((data:[Mensaje,Inventario[]])=>{
-      this.mensaje.success(data[0].mensaje,"Exitoso")
-      this.ProductForm.reset();
-      AppComponent.OrdenarData(data[1])
-      this.local.SetStorage("listaProducto",data[1])
+        
+    this.__productoService.nuevoProducto(this.product)
+     .subscribe((data:Mensaje)=>{
+      var inventario = new Inventario(data.cuerpo as Producto,this.lista.toString(),0,0)
+        this.__inventarioService.ingresarInventario(inventario).subscribe((data:Mensaje)=>{
+        this.mensaje.success(data.mensaje,"Exitoso")
+        this.ProductForm.reset();
+        this.__inventarioService.EventoCargarInventario.emit("CargarInventario")
+      });
       },error=>this.MensajeError(error))
     }
   }

@@ -29,7 +29,7 @@ export class EditarInventarioComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.__inventarioService.EventoCargarInventario.pipe(takeUntil(this.unsuscribir)
-    ).subscribe((m:any)=>this.cargarCantidad())
+    ).subscribe(evento=>evento=="CargarInventario"?this.cargarCantidad():null)
     this.cargarCantidad();
   }
   ngOnDestroy(): void {
@@ -37,11 +37,13 @@ export class EditarInventarioComponent implements OnInit,OnDestroy {
     this.unsuscribir.complete();
   }
   cargarCantidad(){
-          if(this.local.GetStorage("listaProducto")){
-            var data= this.local.GetStorage("listaProducto")as Inventario[];
-            this.ListaInventario=new MatTableDataSource(data);
-            AppComponent.OrdenarData(this.ListaInventario.filteredData);
-          }
+            this.__inventarioService.listarInventartio()
+              .subscribe((data:Inventario[])=>{
+                    this.local.SetStorage("listaProducto",data);
+                    this.ListaInventario=new MatTableDataSource(data);
+                    AppComponent.OrdenarData(this.ListaInventario.data);
+                    this.__inventarioService.EventoCargarInventario.emit("combo")
+                  },error=> this.MensajeError(error));
    }
 
    public Editar(index:number):void{
@@ -50,7 +52,7 @@ export class EditarInventarioComponent implements OnInit,OnDestroy {
 
   public Eliminar(index:number):void{
     let resultado=this.dialog.open(DialogoYesNoComponent,
-      {data:{nombre:this.ListaInventario.filteredData[index].productoId?.nombre,titulo:'producto'}});
+      {data:{nombre:this.ListaInventario.filteredData[index].producto?.nombre,titulo:'producto'}});
    resultado.afterClosed().
    pipe( takeUntil(this.unsuscribir))
    .subscribe((result:any)=>{

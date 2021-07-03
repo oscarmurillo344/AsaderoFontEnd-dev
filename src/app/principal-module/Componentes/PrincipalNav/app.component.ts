@@ -5,6 +5,7 @@ import { map, shareReplay, window } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { LocalstorageService } from '../../Servicios/localstorage.service';
 import { DataService } from '../../Servicios/data.service';
+import { TokenServiceService } from 'src/app/usuario-module/Servicios/token-service.service';
 
 @Component({
   selector: 'app-root',
@@ -27,24 +28,22 @@ shareReplay()
 constructor(private breakpointObserver: BreakpointObserver,
     private router:Router,
     public __Data:DataService,
-    private local:LocalstorageService) {
+    private local:LocalstorageService,
+    private token:TokenServiceService) {
 } 
 
 
     ngOnInit(){
-      if(this.local.GetStorage("AuthToken"))
-      {
-      this.__Data.ObtenerItem()
-      this.router.navigate(["ventas/inicio"]);
-      }else{
-        this.router.navigate(["auth/login"]);
+      if(this.token.getToken() && !this.token.TokenExpirado()){
+        this.__Data.CambiarBotonMenu(false)
+        this.__Data.CambiarBotonCarrito(false)
       }
       this.__Data.notification.subscribe((numero:any)=>this.verificarNotificacion())
       this.isHandset$.subscribe(data=> {
-        if(this.router.url == "/auth/login")
-          this.__Data.CambiarOpen(true)
+        if(this.router.url == "/auth/login" || this.router.url == "/")
+          this.__Data.CambiarVerNavegador(true)
         else
-        this.__Data.CambiarOpen(data)
+        this.__Data.CambiarVerNavegador(data)
       });
     }
   
@@ -59,14 +58,16 @@ constructor(private breakpointObserver: BreakpointObserver,
   logOut(){
       this.local.RemoveAll();
       this.router.navigate(['auth/login']);
-      this.__Data.CambiarBoton(true)
+      this.__Data.CambiarBotonMenu(true)
+      this.__Data.CambiarBotonCarrito(true)
+      this.__Data.CambiarVerNavegador(true)
   }
 
   public static OrdenarData(dato:Array<any>):void{
     dato.sort(function (o1,o2) {
-      if (o1.productoId.nombre > o2.productoId.nombre) { //comparación lexicogŕafica
+      if (o1.producto.nombre > o2.producto.nombre) { //comparación lexicogŕafica
         return 1;
-      } else if (o1.productoId.nombre < o2.productoId.nombre) {
+      } else if (o1.producto.nombre < o2.producto.nombre) {
         return -1;
       } 
       return 0;

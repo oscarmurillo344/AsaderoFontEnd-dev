@@ -1,6 +1,8 @@
 export interface jwtDTO{
-    token:string;
-    type:string;
-    nombreUsuario:string;
-    authorities:string[];
+    access_token: string
+    expires_in: string
+    jti: string
+    refresh_token: string
+    scope: string
+    token_type: string
 }

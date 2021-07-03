@@ -16,7 +16,7 @@ export class ProductoListService {
   constructor(private http:HttpClient) { }
 
   public nuevoProducto(newProduct:Producto): Observable<Mensaje>{
-    return this.http.post<Mensaje>(this.ProductURL+'create',newProduct);
+    return this.http.post<Mensaje>(this.ProductURL+'ingresar',newProduct);
   }
 
   public ListaProducto(): Observable<Producto>{
@@ -24,10 +24,10 @@ export class ProductoListService {
   }
 
   public EliminarProducto(id:number): Observable<Mensaje>{
-    return this.http.delete<Mensaje>(this.ProductURL+'delete/'+id);
+    return this.http.delete<Mensaje>(this.ProductURL+'eliminar/'+id);
   }
 
   public ActualizarProducto(id:number,producto:Producto): Observable<Mensaje>{
-    return this.http.put<Mensaje>(this.ProductURL+'update/'+id,producto);
+    return this.http.put<Mensaje>(this.ProductURL+'actualizar/'+id,producto);
   }
 }

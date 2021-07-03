@@ -20,6 +20,7 @@ import {registerLocaleData  } from "@angular/common";
 import { ToastrModule } from 'ngx-toastr';
 import { InventariosModule } from '../inventarios-module/inventarios.module';
 import { ControlModule } from '../control-module/control.module';
+import { InterceptorResponse } from './interceptor/interceptorResponse.service';
 
 registerLocaleData(localeEs,"es")
 
@@ -56,6 +57,11 @@ registerLocaleData(localeEs,"es")
     {
       provide: HTTP_INTERCEPTORS,
      useClass: InterceptorService,
+        multi: true
+     },
+     {
+      provide: HTTP_INTERCEPTORS,
+     useClass: InterceptorResponse,
         multi: true
      }
   ],

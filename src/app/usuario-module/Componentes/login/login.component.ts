@@ -17,17 +17,16 @@ export class LoginComponent implements OnInit {
 
   UserForm: FormGroup;
   Validar: boolean=false;
-  hide = true;
+  hide=true;
   roles:string[]=[];
-  completar:boolean;
+  verProgress:boolean;
   
   constructor(private route:Router,private mensaje:ToastrService, 
             private token:TokenServiceService,private Servicio_login:AuthService,
             public __Data:DataService) 
     {
-   this.__Data.CambiarOpen(true)
    this.UserForm=this.crearFormulario();
-   this.completar=true;
+   this.verProgress=true;
    }
 
    crearFormulario(){
@@ -36,31 +35,30 @@ export class LoginComponent implements OnInit {
       contrasena: new FormControl('',Validators.required)
      });
    }
-  ngOnInit() {
-    if(this.token.getToken())this.route.navigate(["ventas/inicio"])
-    
+  ngOnInit() {    
   }
 
   LogIn(){
     if(this.UserForm.valid){
-      this.completar=false;
+      this.verProgress=false;
     var loginusu =new LoginUsuario(this.minuscula(this.UserForm.value.usuario),this.UserForm.value.contrasena);
     this.Servicio_login.LogIn(loginusu).subscribe(
       (data:jwtDTO) =>{
         this.Validar=false;
-        this.token.setToken(data.token);
-        this.token.setUser(data.nombreUsuario);
-        this.token.setAuth(data.authorities);
-        this.roles=data.authorities;
+        this.token.setToken(data.access_token)
+        var Usuario = this.token.ObtenerData()
+        this.token.setUser(Usuario.user_name)
+        this.token.setAuth(Usuario.authorities)
         this.mensaje.success("sesión iniciada","información");
-        this.completar=true;
-        this.__Data.CambiarOpen(true)
+        this.verProgress=true;
         this.route.navigate(["ventas/inicio"])
+        this.__Data.CambiarBotonMenu(false)
+        this.__Data.CambiarBotonCarrito(false)
     },
     (err:any) =>{
       this.Validar=true;
-      this.completar=true;
-      this.mensaje.error(err.error.message,"Error");
+      this.verProgress=true;
+      console.log(err)
     })  
     }
   }
