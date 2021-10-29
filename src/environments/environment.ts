@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+<<<<<<< HEAD
   production: false
+=======
+  production: false,
+  url:'https://developerasadero.herokuapp.com/'
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
 };
 
 /*

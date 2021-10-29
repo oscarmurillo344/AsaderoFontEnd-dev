@@ -3,6 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+<<<<<<< HEAD
     "AsaderoFrontEndv2-dev": {
       "projectType": "application",
       "schematics": {
@@ -10,6 +11,11 @@
           "strict": true
         }
       },
+=======
+    "SistemaVentasApp": {
+      "projectType": "application",
+      "schematics": {},
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,11 +23,16 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+<<<<<<< HEAD
             "outputPath": "dist/AsaderoFrontEndv2-dev",
+=======
+            "outputPath": "dist/SistemaVentasApp",
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+<<<<<<< HEAD
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -29,6 +40,16 @@
             ],
             "styles": [
               "src/custom-theme.scss",
+=======
+            "aot": false,
+            "assets": [
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "src/custom-theme.scss",
+              "./node_modules/ngx-toastr/toastr.css",
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
               "src/styles.css"
             ],
             "scripts": []
@@ -44,13 +65,20 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+<<<<<<< HEAD
               "namedChunks": false,
+=======
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
+<<<<<<< HEAD
                   "maximumWarning": "500kb",
                   "maximumError": "1mb"
                 },
@@ -60,24 +88,49 @@
                   "maximumError": "4kb"
                 }
               ]
+=======
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+<<<<<<< HEAD
             "browserTarget": "AsaderoFrontEndv2-dev:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "AsaderoFrontEndv2-dev:build:production"
+=======
+            "browserTarget": "SistemaVentasApp:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "SistemaVentasApp:build:production"
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
+<<<<<<< HEAD
             "browserTarget": "AsaderoFrontEndv2-dev:build"
+=======
+            "browserTarget": "SistemaVentasApp:build"
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
           }
         },
         "test": {
@@ -88,10 +141,18 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
+<<<<<<< HEAD
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
+=======
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
               "src/styles.css"
             ],
             "scripts": []
@@ -114,16 +175,32 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
+<<<<<<< HEAD
             "devServerTarget": "AsaderoFrontEndv2-dev:serve"
           },
           "configurations": {
             "production": {
               "devServerTarget": "AsaderoFrontEndv2-dev:serve:production"
+=======
+            "devServerTarget": "SistemaVentasApp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "SistemaVentasApp:serve:production"
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
             }
           }
         }
       }
     }
   },
+<<<<<<< HEAD
   "defaultProject": "AsaderoFrontEndv2-dev"
 }
+=======
+  "defaultProject": "SistemaVentasApp",
+  "cli": {
+    "analytics": "35047ea5-f641-4e20-9d91-ba72c981dbad"
+  }
+}
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366

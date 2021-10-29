@@ -2,8 +2,11 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+<<<<<<< HEAD
 @import "../node_modules/bootstrap-4-grid/scss/grid.scss";
 
+=======
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -14,6 +17,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
+<<<<<<< HEAD
 $AsaderoFrontEndv2-dev-primary: mat-palette($mat-red, 800);
 $AsaderoFrontEndv2-dev-accent: mat-palette($mat-amber, 800);
 
@@ -29,9 +33,23 @@ $AsaderoFrontEndv2-dev-theme: mat-light-theme((
     warn: $AsaderoFrontEndv2-dev-warn,
   )
 ));
+=======
+$SistemaVentasApp-primary: mat-palette($mat-indigo);
+$SistemaVentasApp-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$SistemaVentasApp-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$SistemaVentasApp-theme: mat-light-theme($SistemaVentasApp-primary, $SistemaVentasApp-accent, $SistemaVentasApp-warn);
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+<<<<<<< HEAD
 @include angular-material-theme($AsaderoFrontEndv2-dev-theme);
+=======
+@include angular-material-theme($SistemaVentasApp-theme);
+>>>>>>> dc0aaaea64640a6faba59a69dd89d418c1196366
 

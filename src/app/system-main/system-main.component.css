@@ -1,0 +1,15 @@
+.contenedor{
+    margin-top: 60px;
+}
+.count{
+    width: 15px; margin-left: 5%;margin-right: 2%;margin-bottom:5%;
+}
+tr{
+ height: 0px !important;   
+}
+.spinner{
+    margin: auto; margin-top: 160px;
+}
+.imgspiner{
+ height: auto; display: block; margin: auto; margin-top: 5%;
+}
