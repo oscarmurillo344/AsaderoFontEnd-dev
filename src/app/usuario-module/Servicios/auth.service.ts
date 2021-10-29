@@ -4,21 +4,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NuevoUsuario } from "../Modelos/nuevoUsuario";
 import { LoginUsuario } from "../Modelos/loginUsuario";
 import { Observable } from 'rxjs';
-import { jwtDTO } from '../Modelos/jwt-to';
 import { environment } from 'src/environments/environment.prod';
 import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
+import { Usuario } from '../Modelos/Usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  authURL=environment.Url+"auth/";
+  UsuarioURL=environment.Url+"usuario/";
 
   constructor(private http:HttpClient) { }
 
   public nuevoUser(newUser:NuevoUsuario): Observable<any>{
-    return this.http.post<any>(this.authURL+'nuevo',newUser);
+    return this.http.post<any>(this.UsuarioURL+'ingresar',newUser);
   }
 
   public LogIn(login:LoginUsuario): Observable<any>{
@@ -29,12 +29,12 @@ export class AuthService {
     return this.http.post<any>(environment.Url+'oauth/token',params.toString());
   }
 
-  public ListarUsuario():Observable<NuevoUsuario[]>{
-    return this.http.get<NuevoUsuario[]>(this.authURL+'listaUsu');
+  public ListarUsuario():Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(this.UsuarioURL+'lista');
   }
   
   public EliminarUser(id:number): Observable<Mensaje>{
-    return this.http.delete<Mensaje>(this.authURL+'deleteuser/'+id);
+    return this.http.delete<Mensaje>(this.UsuarioURL+'eliminar/'+id);
   }
 }
 

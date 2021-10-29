@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { AppComponent } from 'src/app/principal-module/Componentes/PrincipalNav/app.component';
 import { Inventario } from 'src/app/inventarios-module/Modelos/inventario';
 import { InventarioService } from 'src/app/inventarios-module/Servicios/inventario.service';
 import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
-import { forkJoin, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
 import { Producto } from '../../Modelos/producto';
@@ -48,7 +46,6 @@ export class CrearInventarioComponent implements OnInit {
   CargarCombo(){
       this.ComboInventario=this.local.GetStorage("listaProducto");
       this.ComboInventario.forEach((data,index)=> data.producto?.tipo=='combos' ? this.ComboInventario.splice(index,1):undefined)
-      AppComponent.OrdenarData(this.ComboInventario);
   }
   createForm(){
     return new FormGroup({

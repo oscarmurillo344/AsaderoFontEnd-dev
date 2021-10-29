@@ -21,8 +21,8 @@ export class TokenServiceService {
     this.local.SetStorage(TOKEN_KEY,token);
   }
 
-  public getToken(){
-    return this.local.GetStorage(TOKEN_KEY);
+  public getToken(): string{
+    return this.local.GetStorage(TOKEN_KEY) as string;
   }
 
   public setUser(user:string): void{
@@ -53,13 +53,14 @@ export class TokenServiceService {
   }
 
   public ObtenerData():any{
+    if(this.getToken())
     return JSON.parse(atob(this.getToken().split('.')[1]))
   }
 
     TokenExpirado():boolean{
       let payload = this.ObtenerData()
       let hoy = new Date().getTime() / 1000
-      if(payload.exp < hoy){
+      if(payload?.exp < hoy){
         return true
       }
       return false

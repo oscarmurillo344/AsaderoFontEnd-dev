@@ -1,7 +1,6 @@
 import { Component, OnInit,AfterContentInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AppComponent } from 'src/app/principal-module/Componentes/PrincipalNav/app.component';
-import { DataService } from 'src/app/principal-module/Servicios/data.service';
+import { DataMenuService } from 'src/app/principal-module/Servicios/data-menu.service';
 import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
 import { TokenServiceService } from 'src/app/usuario-module/Servicios/token-service.service';
 import { Inventario } from '../../../inventarios-module/Modelos/inventario';
@@ -32,62 +31,38 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
   constructor(private mensaje:ToastrService,
               private __servicioPro:InventarioService,
               private token:TokenServiceService,
-              private __data:DataService,
+              private __data:DataMenuService,
               private local: LocalstorageService,
-              public __Data:DataService
               ) 
   {
-    this.__Data.CambiarVerNavegador(this.detectarDispositivo())
     this.platos=new Array<ListaProducto>()
     this.bebidas=new Array<ListaProducto>()
     this.combos=new Array<ListaProducto>()
     this.porciones=new Array<ListaProducto>()
     this.carrito=new Array<ListaProducto>()
     this.productLista=new Array<Inventario>()
-    this.roles=this.token.getAuth()
-    this.tokens=this.token.getToken()
     }
  
    
   ngAfterContentInit() {
       setTimeout(() => {
-        this.roles.filter(data=> data=='ROLE_ADMIN'? this.__data.CambiarItemsMenu(true):null)
-        this.__data.notification.emit(1);
-        this.__data.nombreUsuario=this.token.getUser();
+        this.__data.$notificacion.emit(1);
+        this.__data.$nombreUsuario.emit(this.token.getUser());
       });
     }
 
   ngOnInit() {
-
+    this.roles=this.token.getAuth()
+    this.tokens=this.token.getToken()
     this.llenarListas();
     if(this.local.GetStorage('DataCarrito'))this.carrito=this.local.GetStorage('DataCarrito');
     this.__servicioPro.listarpollo()
     .subscribe((data:updatePollo)=>{
-      if(data.pollo!==undefined){
        this.__data.pollo=data.pollo;
        this.__data.presa=data.presa;
        this.local.SetStorage("pollos",new updatePollo(this.__data.pollo,this.__data.presa));
-      }else{
-       this.__data.pollo=0;
-       this.__data.pollo=0;
-       this.local.SetStorage("pollos",new updatePollo(0,0));
-      }
-     },(error:any)=>{
-       this.local.SetStorage("pollos",new updatePollo(0,0))
-        });
+     });
   }
-
-  detectarDispositivo():boolean{
-    var valor=false;
-      if( navigator.userAgent.match(/Android/i))
-          valor=true
-      if(navigator.userAgent.match(/webOS/i))
-          valor=false
-      if(navigator.userAgent.match(/iPhone/i))
-        valor=true
-    return valor
-  }
-
   llenarListas():void
   {
     this.productLista=this.local.GetStorage("listaProducto");
@@ -122,7 +97,6 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
             this.productLista[index].producto.presa,
             this.productLista[index].extras
             ));
-            AppComponent.OrdenarData2(this.platos);
           break;
       
         case 'bebidas':
@@ -134,7 +108,6 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
             this.productLista[index].producto.presa,
             this.productLista[index].extras
             ));
-            AppComponent.OrdenarData2(this.bebidas);
           break;
           
         case 'combos':
@@ -146,7 +119,6 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
             this.productLista[index].producto.presa,
             this.productLista[index].extras
             ));
-            AppComponent.OrdenarData2(this.combos);
           break;
           
         case 'porciones':
@@ -159,7 +131,6 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
             this.productLista[index].producto.presa,
             this.productLista[index].extras
             ));
-            AppComponent.OrdenarData2(this.porciones);
           break;
       }        
     }
@@ -229,7 +200,7 @@ export class PrincipalVentasComponent implements OnInit, AfterContentInit{
           break;
     }
        this.local.SetStorage('DataCarrito',this.carrito);
-       this.__data.notification.emit(1);
+       this.__data.$notificacion.emit(1);
   }
    
   verificar(index:number,tipo:string):boolean

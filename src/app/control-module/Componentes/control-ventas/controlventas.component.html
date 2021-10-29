@@ -27,7 +27,7 @@
               <mat-label>Seleccione usuario: </mat-label>
               <mat-select formControlName="usuario" >
                 <mat-option value="todos" >todos</mat-option>
-                <mat-option *ngFor="let usua of user"
+                <mat-option *ngFor="let usua of ListaUser | async"
                  [value]="usua.nombreUsuario">
                  {{usua.nombre}}
                 </mat-option>

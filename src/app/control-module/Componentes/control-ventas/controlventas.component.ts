@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Gastos } from 'src/app/gastos-module/Modelos/gastos';
 import { GastosX } from 'src/app/gastos-module/Modelos/gastosX';
@@ -15,6 +15,7 @@ import { EntreFecha } from 'src/app/control-module/Modelos/EntreFecha';
 import { VentasDay } from '../../Modelos/VentasDay';
 import { PagarService } from 'src/app/ventas-module/Servicios/pagar.service';
 import { ExportarComponent } from '../exportar/exportar.componentes';
+import { Usuario } from 'src/app/usuario-module/Modelos/Usuario';
 
 @Component({
   selector: 'app-controlventas',
@@ -30,7 +31,7 @@ export class ControlventasComponent implements OnInit {
   selected:number=0;
   vista_dia:boolean=false
   vista_fecha:boolean=false
-  user:Array<NuevoUsuario>=new Array()
+  ListaUser:Observable<Usuario[]> | undefined
   fechas!:EntreFecha;
   UserForm:FormGroup;
   cerrado!:boolean;
@@ -48,7 +49,7 @@ export class ControlventasComponent implements OnInit {
     public dialogo:MatDialog
   ) { 
     this.UserForm=this.crearFormMain()
-    this.usuario.ListarUsuario().subscribe((data:NuevoUsuario[])=>this.user=data)
+    this.ListaUser = this.usuario.ListarUsuario()
     this.semana=['lunes','martes','miercoles','jueves','viernes','sábado','domingo'];
   }
 

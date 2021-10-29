@@ -1,84 +1,44 @@
-<mat-sidenav-container class="sidenav-container" >
-    <mat-sidenav #drawer class="sidenav" fixedInViewport
-        [opened]="!__Data.ObtenerVerNavegador()"
-        [attr.role]="__Data.ObtenerVerNavegador() ? 'dialog' : 'navigation'"
-        [mode]="__Data.ObtenerVerNavegador() ? 'over' : 'side'">
-  
-        <img src="../../assets/imagenes/pollo.webp" class="imagen" alt="Logotipo Da&ntilde;ado" width="150">
-  
-        <h1 class="tituloMenu">
-        Pollos Andy's
-        </h1>      
-         
-      <mat-nav-list >
-            <mat-expansion-panel routerLinkActive="active" hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <mat-icon>
-                    person
-                  </mat-icon>  
-                  <span> {{__Data.nombreUsuario}} </span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-                <span style="margin-top: 5%;">Pollo: {{__Data.pollo}} </span>
-                <span style="margin-left: 5%;">Presa: {{__Data.presa}} </span>
-                <button [routerLink]="['inventarios/actualizarmerca']" mat-button color="warn" 
-                (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">Actualizar pollos</button>
-            </mat-expansion-panel>
-        <a mat-list-item [routerLink]="['ventas/inicio']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''" routerLinkActive="active">
-          <mat-icon>
-            home
-          </mat-icon> 
-          Inicio
-        </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItemsMenu()" [routerLink]="['inventarios/crear']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
-          <mat-icon>
-            list_alt
-          </mat-icon>
-          Inventario
-        </a>
-        <a mat-list-item routerLinkActive="active" [routerLink]="['gastos/ingresar']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
-          <mat-icon>
-            pending_actions
-          </mat-icon>
-          Gastos
-        </a>
-        <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItemsMenu()" [routerLink]="['control/controlventas']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
-          <mat-icon>
-            fact_check
-          </mat-icon>
-          Control</a>
-          <a mat-list-item routerLinkActive="active" *ngIf="__Data.ObtenerItemsMenu()" [routerLink]="['auth/usuarios']" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
-            <mat-icon>
-              person_add
-            </mat-icon>
-            Usuarios</a>
-        <a mat-list-item routerLinkActive="active" (click)="logOut()" (click)="__Data.ObtenerVerNavegador()?drawer.toggle():''">
-          <mat-icon>
-            exit_to_app
-          </mat-icon>
-          Log Out</a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="contenedor">
-      <mat-toolbar class="header Fixed" >
-        <button mat-icon-button
-          (click)="drawer.toggle()"
-           *ngIf="!__Data.ObtenerBotonMenu()">
-          <mat-icon >menu</mat-icon>
-        </button>
-        <span class="centar"> Sistema de Ventas</span>
-          <span *ngIf="!__Data.ObtenerBotonCarrito()" [matBadge]="notificacion" 
-          matBadgeOverlap="false" [matBadgeHidden]="notificacion===0" style="margin-right: 2%;">
-            <a  [routerLink]="['ventas/carrito']" style="color:white ;"> 
-            <mat-icon>
-              shopping_cart
-            </mat-icon>
+<app-cargando *ngIf="VerLoading | async" ></app-cargando>
+<mat-sidenav-container class="w-100 h-100">
+  <mat-toolbar class="FixedCabecera" *ngIf="VerMenu | async">
+    <a (click)="sidenav.toggle()">
+      <img src="../../assets/imagenes/pollo.webp" 
+       alt="Logotipo Da&ntilde;ado"
+       class="logoPollo">
+  </a>
+    <span class="mx-auto Bg-white"> Sistema de Ventas</span>
+      <span  [matBadge]="Notificacion | async" 
+              matBadgeOverlap="false" 
+             [matBadgeHidden]="(Notificacion | async) == 0">
+        <a  routerLink="'ventas/carrito"> 
+        <mat-icon class="Bg-white">
+          shopping_cart
+        </mat-icon>
+      </a>
+    </span>
+  </mat-toolbar> 
+  <mat-sidenav #sidenav class="NavLateral" *ngIf="VerMenu | async"
+               [attr.role]="cerrarNav? 'dialog' : 'navigation'"
+               [mode]="cerrarNav ? 'side' : 'over'" 
+               fixedInViewport="true" 
+               fixedTopGap="70" 
+               [opened]="cerrarNav">
+      <h1 class="tituloMenu mt-4">
+      Pollos Andy's
+      </h1>      
+      <mat-nav-list *ngFor="let menu of ListaMenu">
+          <a mat-list-item 
+              [routerLink]="menu.ruta"
+              (click)="!cerrarNav ? sidenav.toggle() : ''" 
+              routerLinkActive="activar">
+              <mat-icon class="mx-1 white">
+                  {{ menu.icon }}
+              </mat-icon>
+              {{ menu.nombre }}
           </a>
-        </span>
-      </mat-toolbar>
-      <!-- Add Content Here -->
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
+      </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="contenedor-principal">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

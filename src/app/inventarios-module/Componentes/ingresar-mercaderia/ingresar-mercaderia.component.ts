@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DataService } from 'src/app/principal-module/Servicios/data.service';
+import { DataMenuService } from 'src/app/principal-module/Servicios/data-menu.service';
 import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
 import { Inventario } from '../../Modelos/inventario';
 import { updatePollo } from '../../Modelos/updatePollo';
@@ -22,7 +22,7 @@ export class IngresarMercaderiaComponent implements OnInit {
   constructor(
     private __serviceinven:InventarioService,
     private toast:ToastrService,
-    private datas:DataService,
+    private _data:DataMenuService,
     private route:Router,
     private local:LocalstorageService
   ) 
@@ -49,9 +49,9 @@ export class IngresarMercaderiaComponent implements OnInit {
         var inventario = this.productLista.find((data:Inventario)=> data.producto?.tipo==='mercaderia' )
         this.__serviceinven.UpdatePollo(inventario?.id == undefined? 0:inventario.id,this.update). 
         subscribe(data=>{
-          this.datas.pollo+=this.PollosForm.value.pollo;
-          this.datas.presa+=this.PollosForm.value.presa;
-          this.update2=new updatePollo(this.datas.pollo,this.datas.presa);
+          this._data.pollo+=this.PollosForm.value.pollo;
+          this._data.presa+=this.PollosForm.value.presa;
+          this.update2=new updatePollo(this._data.pollo,this._data.presa);
           this.toast.success(data.mensaje,"Exitoso");
           this.PollosForm.reset();
           this.__serviceinven.TablePollo(this.update2).
@@ -66,8 +66,8 @@ export class IngresarMercaderiaComponent implements OnInit {
       }else{
         this.__serviceinven.TablePollo(this.update).
         subscribe(data=> this.route.navigate(["ventas/inicio"]));
-        this.datas.pollo=this.PollosForm.value.pollo;
-        this.datas.presa=this.PollosForm.value.presa;
+        this._data.pollo=this.PollosForm.value.pollo;
+        this._data.presa=this.PollosForm.value.presa;
         this.toast.success("Pollo actualizado","Exitoso");
         this.PollosForm.reset();
       }

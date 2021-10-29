@@ -1,65 +1,31 @@
-.sidenav-container {
-    height: 100%;
-  }
-  .negrita{
-    font-weight: bold;
-  }
-  .decorador{
-    text-decoration: none;color: white;
-  }
-  .sidenav {
-    width: 180px;
-  }
-  mat-expansion-panel-body{
-    padding: 0 !important;
-  }
-  .sidenav .mat-toolbar {
-    background: inherit;
-  }
-  
-  .mat-toolbar{
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .header{
-    background-color: black;
-    color: white;
-  }
-  .centar{
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .imagen{
-    margin-top: 5%;
-    margin-left: 5%;
-  }
-  
-   .tituloMenu{
-      font-size: 25px;
-      white-space: pre-wrap;
-      margin-top: 3%;
-      text-align: center;
-      font-family: "Roboto, Helvetica Neue, sans-serif";
-    }
-  
-    .Fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    }
-    .contenedor{
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
-    .mostrar{
-      display: none ;
-    }
-    
-  
-  
+.contenedor-principal {
+  margin-top: 15px;
+}
+.NavLateral{
+  width: 170px;
+  height: 100%;
+}
+.FixedCabecera{
+  position: fixed;
+  height: 74px;
+  padding: 0 25px 0 0;
+  z-index: 2;
+  background-color: black;
+}
+.logoPollo{
+  margin-top: 12px;
+  width: 120px;
+  height: 74px;
+}
+.Bg-white{
+  color: white !important;
+}
+.activar{
+  background-color: #FFD54F;
+}
+.tituloMenu{
+  font-size: 25px;
+  white-space: pre-wrap;
+  text-align: center;
+  font-family: "Roboto, Helvetica Neue, sans-serif";
+}

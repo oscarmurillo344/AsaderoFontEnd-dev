@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
 import { NuevoUsuario } from '../../Modelos/nuevoUsuario';
+import { Usuario } from '../../Modelos/Usuario';
 import { AuthService } from '../../Servicios/auth.service';
 import { DialogoYesNoComponent } from '../dialogo-yes-no/dialogo-yes-no.component';
 
@@ -16,7 +17,7 @@ import { DialogoYesNoComponent } from '../dialogo-yes-no/dialogo-yes-no.componen
 export class UsuarioComponent implements OnInit {
 
   UsuarioForm:FormGroup;
-  ListaUsuario!:Array<NuevoUsuario>;
+  ListaUsuario!:Array<Usuario>;
   displayedColumns=['nombre','usuario','roles','Eliminar'];
   User!:NuevoUsuario;
   hide:boolean=true;
@@ -30,8 +31,8 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listarUser();
   }
+  
   ngOnDestroy(): void {
     this.unsuscribir.next();
     this.unsuscribir.complete();
@@ -40,6 +41,7 @@ export class UsuarioComponent implements OnInit {
   crearForm(){
     return new FormGroup({
       nombre: new FormControl('',Validators.required),
+      apellido: new FormControl('',Validators.required),
       usuario: new FormControl('',Validators.required),
       email: new FormControl('',[Validators.email,Validators.required]),
       pass: new FormControl('',[Validators.required]),
@@ -48,8 +50,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   listarUser(){
-    this.__serviceUser.ListarUsuario().
-    subscribe((data:NuevoUsuario[])=> this.ListaUsuario=data);
+    this.__serviceUser.ListarUsuario().subscribe((data:Usuario[])=> this.ListaUsuario = data )
   }
 
   CrearUser(){
@@ -57,6 +58,7 @@ export class UsuarioComponent implements OnInit {
       if(this.UsuarioForm.value.tipo==='user'){
         this.User=new NuevoUsuario(
           this.minuscula(this.UsuarioForm.value.nombre),
+          this.minuscula(this.UsuarioForm.value.apellido),
           this.minuscula(this.UsuarioForm.value.usuario),
           this.minuscula(this.UsuarioForm.value.email),
           this.UsuarioForm.value.pass,
@@ -65,6 +67,7 @@ export class UsuarioComponent implements OnInit {
       }else{
         this.User=new NuevoUsuario(
           this.minuscula(this.UsuarioForm.value.nombre),
+          this.minuscula(this.UsuarioForm.value.apellido),
           this.minuscula(this.UsuarioForm.value.usuario),
           this.minuscula(this.UsuarioForm.value.email),
           this.UsuarioForm.value.pass,
@@ -80,12 +83,6 @@ export class UsuarioComponent implements OnInit {
         }
         this.listarUser();
         this.UsuarioForm.reset();
-      },(error:any)=>{
-        if(error.error.mensaje!==undefined){
-          this.toast.error(error.error.mensaje,"Error");
-        }else{
-          this.toast.error("Error en la consulta","Error");
-        }
       });
     }
   }
@@ -105,12 +102,6 @@ export class UsuarioComponent implements OnInit {
             subscribe((data:Mensaje)=>{
               this.toast.success(data.mensaje,"Exitoso");
               this.listarUser();
-            },(error:any)=>{
-                if(error.error.mensaje=== undefined){
-                  this.toast.error("Error en consulta","Error");
-                }else{
-                  this.toast.error(data.mensaje,"Error");
-                }
             });
           }else{
             resultado.close();

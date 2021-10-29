@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Mensaje } from 'src/app/principal-module/Modelos/mensaje';
-import { DataService } from 'src/app/principal-module/Servicios/data.service';
 import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
 import { TokenServiceService } from 'src/app/usuario-module/Servicios/token-service.service';
 import { Factura } from '../../Modelos/factura';
@@ -13,6 +12,7 @@ import { InventarioService } from '../../../inventarios-module/Servicios/inventa
 import { PagarService } from '../../Servicios/pagar.service';
 import { Producto } from 'src/app/inventarios-module/Modelos/producto';
 import { FacturaItems } from '../../Modelos/FacturaItems';
+import { DataMenuService } from 'src/app/principal-module/Servicios/data-menu.service';
 
 @Component({
   selector: 'app-facturar-ventas',
@@ -38,7 +38,7 @@ export class FacturarVentasComponent implements OnInit {
     private token:TokenServiceService,
     private route:Router,
     private __serviceInven:InventarioService,
-    private __Data:DataService,
+    private __Data:DataMenuService,
     private local:LocalstorageService) {
       this.listaProducto= new Array()
       this.listaFacturaItem = Array()
@@ -87,7 +87,7 @@ export class FacturarVentasComponent implements OnInit {
              this.local.RemoveStorage('DataCarrito');
              this.__serviceInven.TablePollo(this.polloMerca).subscribe(data=>null)
              this.local.SetStorage("nfactura",undefined)
-             this.__Data.notification.emit(1);
+             this.__Data.$notificacion.emit(1);
              this.route.navigate(['/inicio']);
              this.bloqueo=false;
          },error=>{
@@ -124,20 +124,20 @@ export class FacturarVentasComponent implements OnInit {
       this.listaProducto.splice(index,1);
       this.local.SetStorage('DataCarrito',this.listaProducto);
       this.verificarCarrito();
-      this.__Data.notification.emit(1);
+      this.__Data.$notificacion.emit(1);
     }
     sumar(index:number){
       this.listaProducto[index].cantidad++;
       this.local.SetStorage('DataCarrito',this.listaProducto);
       this.verificarCarrito();
-      this.__Data.notification.emit(1);
+      this.__Data.$notificacion.emit(1);
     }
     restar(index:number){
       if(this.listaProducto[index].cantidad > 1){
         this.listaProducto[index].cantidad--;
         this.local.SetStorage('DataCarrito',this.listaProducto);
         this.verificarCarrito();
-        this.__Data.notification.emit(1);
+        this.__Data.$notificacion.emit(1);
       }
     }
     public diaSemana():any{

@@ -1,7 +1,9 @@
-<div *ngIf="verProgress; else progress">
-  <mat-card class="centar">
-    <mat-card-header style="text-align: center;">
-       <h2>Iniciar Sesi&oacute;n</h2> 
+<mat-card class="centar bg-pollo text-white">
+  <p class="text-center tituloPollo">Pollos Andy's</p>
+</mat-card>
+<mat-card class="segundo-centrar">
+    <mat-card-header>
+      <mat-card-title class="mb-3 ml-2 mt-2">Iniciar Sesi&oacute;n</mat-card-title>
     </mat-card-header>
     <mat-card-content [formGroup]="UserForm" >
         <mat-form-field appearance="fill" style="width: 100%;" >
@@ -20,13 +22,11 @@
           </mat-error>
         </mat-card-content>
     <mat-card-actions >
-        <button (click)="LogIn()" [disabled]="!UserForm.valid" mat-raised-button color="warn"class="botonLogin" >
+        <button (click)="LogIn()" 
+                mat-raised-button 
+                color="accent" 
+                class="w-100" >
           <mat-icon>login</mat-icon>
           Login</button>
       </mat-card-actions>
 </mat-card>
-</div>
-<ng-template #progress >
-  <mat-spinner color="warn" class="spinner" ></mat-spinner>
-  <img src="../../assets/imagenes/pollo.webp" class="imgspiner" width="150" alt="Logotipo Da&ntilde;ado">
-</ng-template>

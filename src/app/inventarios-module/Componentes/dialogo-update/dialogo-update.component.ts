@@ -97,7 +97,6 @@ export class DialogoUpdateComponent implements OnInit,OnDestroy {
     this.CombInventario=this.local.GetStorage("listaProducto");
     this.CombInventario.forEach((data,index)=> data.producto?.tipo=='combos'? this.CombInventario.splice(index,1): undefined)
     this.estadoProducto(this.lista,this.CombInventario)
-    AppComponent.OrdenarData(this.CombInventario);
 }
   estadoProducto(ver:string[],data:Inventario[]):void{
     data.forEach(da=>{

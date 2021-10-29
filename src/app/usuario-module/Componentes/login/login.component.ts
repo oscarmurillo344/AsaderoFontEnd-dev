@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import { DataService } from 'src/app/principal-module/Servicios/data.service';
+import { DataMenuService } from 'src/app/principal-module/Servicios/data-menu.service';
+import { LocalstorageService } from 'src/app/principal-module/Servicios/localstorage.service';
 import { jwtDTO } from '../../Modelos/jwt-to';
 import { LoginUsuario } from '../../Modelos/loginUsuario';
 import { AuthService } from '../../Servicios/auth.service';
@@ -19,14 +20,15 @@ export class LoginComponent implements OnInit {
   Validar: boolean=false;
   hide=true;
   roles:string[]=[];
-  verProgress:boolean;
   
-  constructor(private route:Router,private mensaje:ToastrService, 
-            private token:TokenServiceService,private Servicio_login:AuthService,
-            public __Data:DataService) 
+  constructor(private route:Router,
+            private mensaje:ToastrService, 
+            public _data:DataMenuService,
+            private local:LocalstorageService,
+            private token:TokenServiceService,
+            private Servicio_login:AuthService) 
     {
    this.UserForm=this.crearFormulario();
-   this.verProgress=true;
    }
 
    crearFormulario(){
@@ -36,12 +38,16 @@ export class LoginComponent implements OnInit {
      });
    }
   ngOnInit() {    
+    if(this.token.TokenExpirado()){
+      this.local.RemoveAll()
+      this._data.CerrarMenu()
+    }
   }
 
   LogIn(){
     if(this.UserForm.valid){
-      this.verProgress=false;
-    var loginusu =new LoginUsuario(this.minuscula(this.UserForm.value.usuario),this.UserForm.value.contrasena);
+    var loginusu =new LoginUsuario(this.minuscula(this.UserForm.value.usuario),
+                                   this.UserForm.value.contrasena);
     this.Servicio_login.LogIn(loginusu).subscribe(
       (data:jwtDTO) =>{
         this.Validar=false;
@@ -50,16 +56,11 @@ export class LoginComponent implements OnInit {
         this.token.setUser(Usuario.user_name)
         this.token.setAuth(Usuario.authorities)
         this.mensaje.success("sesión iniciada","información");
-        this.verProgress=true;
         this.route.navigate(["ventas/inicio"])
-        this.__Data.CambiarBotonMenu(false)
-        this.__Data.CambiarBotonCarrito(false)
-    },
-    (err:any) =>{
-      this.Validar=true;
-      this.verProgress=true;
-      console.log(err)
+        this._data.AbrirMenu()
     })  
+    }else{
+      this.mensaje.warning("Formulario invalido", "Advertencia")
     }
   }
   public minuscula(texto:string):string{

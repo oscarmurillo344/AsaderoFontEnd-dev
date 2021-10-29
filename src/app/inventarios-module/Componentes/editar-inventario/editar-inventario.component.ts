@@ -41,7 +41,6 @@ export class EditarInventarioComponent implements OnInit,OnDestroy {
               .subscribe((data:Inventario[])=>{
                     this.local.SetStorage("listaProducto",data);
                     this.ListaInventario=new MatTableDataSource(data);
-                    AppComponent.OrdenarData(this.ListaInventario.data);
                     this.__inventarioService.EventoCargarInventario.emit("combo")
                   },error=> this.MensajeError(error));
    }

@@ -1,4 +1,5 @@
 import {Pipe,PipeTransform } from '@angular/core';
+import { of } from 'rxjs';
 
 
 @Pipe({
@@ -7,18 +8,17 @@ import {Pipe,PipeTransform } from '@angular/core';
 
 export class FilterArray implements PipeTransform{
 
-    transform(value: any):any {
-        if(value === '' || value.length < -1)return value;
-        let restult='';
-        for(const post of value){
-            if(post.rolNombre ==='ROLE_USER'){
-                restult='User';
-              }
-            if(post.rolNombre ==='ROLE_ADMIN'){
-                    restult='User,Admin';
+    rol:string=""
+    transform(value: any[]):any {
+        if(value == null || value.length < -1)return value;
+        let result = ''
+        value.forEach(
+            (data:any)=>{
+             this.rol = data.rolNombre
+             result += this.rol.substring(5) +' '
             }
-        }
-        return restult;
+        );
+        return result;
     }
 
 }

@@ -1,5 +1,4 @@
-<div class="contenedor">
-    <div *ngIf="complete; else progress">
+
       <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
   
         <mat-tab label="Platos"> 
@@ -160,10 +159,4 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </mat-tab>
-      </mat-tab-group>
-    </div>
-    <ng-template #progress >
-      <mat-spinner color="warn" class="spinner" ></mat-spinner>
-      <img src="../../assets/imagenes/pollo.webp" class="imgspiner" width="150" alt="Logotipo Da&ntilde;ado">
-  </ng-template>
-  </div>  
+      </mat-tab-group>  

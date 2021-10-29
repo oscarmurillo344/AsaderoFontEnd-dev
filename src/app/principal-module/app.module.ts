@@ -12,24 +12,29 @@ import { AppComponent } from './Componentes/PrincipalNav/app.component';
 import { ErrorComponent } from './Componentes/error/error.component';
 
 import { InterceptorService } from './interceptor/interceptor.service';
-import { DataService } from './Servicios/data.service';
 import { LocalstorageService } from './Servicios/localstorage.service';
 
 import localeEs from '@angular/common/locales/es';
-import {registerLocaleData  } from "@angular/common";
+import {CommonModule, registerLocaleData  } from "@angular/common";
 import { ToastrModule } from 'ngx-toastr';
 import { InventariosModule } from '../inventarios-module/inventarios.module';
 import { ControlModule } from '../control-module/control.module';
 import { InterceptorResponse } from './interceptor/interceptorResponse.service';
+import { DataMenuService } from './Servicios/data-menu.service';
+import { LoginComponent } from '../usuario-module/Componentes/login/login.component';
+import { CargandoComponent } from './Componentes/cargando/cargando.component';
+import { LoadingService } from './Servicios/loading.service';
 
 registerLocaleData(localeEs,"es")
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorComponent
+    ErrorComponent,
+    CargandoComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -49,8 +54,9 @@ registerLocaleData(localeEs,"es")
     ErrorComponent
   ],
   providers: [
-    DataService,
+    DataMenuService,
     LocalstorageService,
+    LoadingService,
     {
       provide: LOCALE_ID, useValue: 'es'
     },
